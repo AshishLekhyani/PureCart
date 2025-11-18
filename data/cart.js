@@ -44,14 +44,14 @@ export function removeFromCart(productId) {
     cart = newCart;
 }
 
-// OR function removeFromCart(productId) {
-//      let index;
+// OR export function removeFromCart(productId) {
+//              let index;
 
-//      cart.forEach( (cartItem, i) => {
-//          if(cartItem.productId === productId) {
-//              index = i;
-//          }
-//      });
+//              cart.forEach( (cartItem, i) => {
+//                  if(cartItem.productId === productId) {
+//                      index = i;
+//                  }
+//              });
 
-//     cart.splice(index, 1);
-// }
+//              cart.splice(index, 1);
+//              }
