@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js';
+import { cart, addToCart } from '../data/cart.js';
 import { products } from '../data/products.js';
 
 let productsHTML = '';
@@ -54,6 +54,17 @@ products.forEach((product) => {
         </div>`;
 });
 
+
+function updateCartQuantity() {
+  let cartQuantity = 0;
+  
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+  
+  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
+
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
@@ -61,43 +72,18 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
   button.addEventListener('click', () => {
     const { productId } = button.dataset;
 
-    const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
-    const quantity = Number(quantitySelector.value);
-
-    const addedToCart = document.querySelector(`.js-added-to-cart-${productId}`);
-
-    addedToCart.classList.add('visible-added-to-cart');
+    const addToCartMessage = document.querySelector(`.js-added-to-cart-${productId}`);
+    
+    addToCartMessage.classList.add('visible-added-to-cart');
     setTimeout(() => {
       if (addedMessage) {
         clearTimeout(addedMessage);
       }
-      addedMessage = setTimeout(() => { addedToCart.classList.remove('visible-added-to-cart'); }, 2000);
+      addedMessage = setTimeout(() => { addToCartMessage.classList.remove('visible-added-to-cart'); }, 2000);
     });
 
-    let matchingItem;
+    addToCart(productId);
+    updateCartQuantity();
 
-    cart.forEach((item) => {
-      if (productId === item.productId) {
-        matchingItem = item;
-      }
-    });
-
-    if (matchingItem) {
-      matchingItem.quantity += quantity;
-    }
-    else {
-      cart.push({
-        productId,
-        quantity
-      });
-    }
-
-    let cartQuantity = 0;
-
-    cart.forEach((item) => {
-      cartQuantity += item.quantity;
-    });
-
-    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
   });
 });
