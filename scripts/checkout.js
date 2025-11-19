@@ -1,4 +1,4 @@
-import { cart, removeFromCart, calculateCartQuantity } from '../data/cart.js';
+import { cart, removeFromCart, calculateCartQuantity, updateCart } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
@@ -35,11 +35,13 @@ cart.forEach((cartItem) => {
                         </div>
                         <div class="product-quantity">
                             <span>
-                                Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                                Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}">${cartItem.quantity}</span>
                             </span>
-                            <span class="update-quantity-link link-primary">
+                            <span class="update-quantity-link link-primary js-update-quantity-link" data-product-id = "${matchingProduct.id}">
                                 Update
                             </span>
+                            <input class="quantity-input js-quantity-input-${matchingProduct.id}" type = "number">
+                            <span class="save-quantity-link link-primary js-save-quantity-link" data-product-id = "${matchingProduct.id}">Save</span>
                             <span class="delete-quantity-link link-primary js-delete-quantity-link" data-product-id = "${matchingProduct.id}">
                                 Delete
                             </span>
@@ -97,6 +99,34 @@ cart.forEach((cartItem) => {
 
 document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
 
+document.querySelectorAll('.js-update-quantity-link').forEach((link) => {
+    link.addEventListener('click', () => {
+        const { productId } = link.dataset;
+        const container = document.querySelector(`.js-cart-item-container-${productId}`);
+
+        container.classList.add('is-editing-quantity');
+        document.querySelector(`.js-quantity-input-${productId}`).focus();
+
+    });
+});
+
+document.querySelectorAll('.js-save-quantity-link').forEach((link) => {
+    const { productId } = link.dataset;
+    const container = document.querySelector(`.js-cart-item-container-${productId}`);
+    const quantityInput = document.querySelector(`.js-quantity-input-${productId}`);
+
+    link.addEventListener('click', () => {
+        saveUpdateQuntity(quantityInput, container, productId)
+    });
+
+    quantityInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            saveUpdateQuntity(quantityInput, container, productId)
+        }
+    });
+
+});
+
 document.querySelectorAll('.js-delete-quantity-link').forEach((link) => {
     link.addEventListener('click', () => {
         const { productId } = link.dataset;
@@ -107,3 +137,25 @@ document.querySelectorAll('.js-delete-quantity-link').forEach((link) => {
         calculateCartQuantity('.js-checkout-items');
     });
 });
+
+
+function saveUpdateQuntity(quantityInput, container, productId) {
+    const newQuantity = Number(quantityInput.value);
+
+    container.classList.remove('is-editing-quantity');
+    
+    if (newQuantity < 0) {
+        alert('Quantity must be at least 0 and less than 1000');
+        return;
+    }
+    else if (newQuantity === 0) {
+        container.remove();
+        removeFromCart(productId);
+    }
+    else {
+        updateCart(productId, newQuantity);
+        document.querySelector(`.js-quantity-label-${productId}`).innerHTML = newQuantity;
+    }
+    
+    calculateCartQuantity('.js-checkout-items');
+}
