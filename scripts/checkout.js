@@ -116,12 +116,12 @@ document.querySelectorAll('.js-save-quantity-link').forEach((link) => {
     const quantityInput = document.querySelector(`.js-quantity-input-${productId}`);
 
     link.addEventListener('click', () => {
-        saveUpdateQuntity(quantityInput, container, productId)
+        saveUpdateQuantity(quantityInput, container, productId)
     });
 
     quantityInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
-            saveUpdateQuntity(quantityInput, container, productId)
+            saveUpdateQuantity(quantityInput, container, productId)
         }
     });
 
@@ -139,7 +139,7 @@ document.querySelectorAll('.js-delete-quantity-link').forEach((link) => {
 });
 
 
-function saveUpdateQuntity(quantityInput, container, productId) {
+function saveUpdateQuantity(quantityInput, container, productId) {
     const newQuantity = Number(quantityInput.value);
 
     container.classList.remove('is-editing-quantity');
