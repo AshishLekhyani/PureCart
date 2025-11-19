@@ -83,12 +83,14 @@ export function renderOrderSummary() {
         const quantityInput = document.querySelector(`.js-quantity-input-${productId}`);
 
         link.addEventListener('click', () => {
-            saveUpdateQuantity(quantityInput, container, productId)
+            saveUpdateQuantity(quantityInput, container, productId);
+            renderPaymentSummary();
         });
 
         quantityInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
-                saveUpdateQuantity(quantityInput, container, productId)
+                saveUpdateQuantity(quantityInput, container, productId);
+                renderPaymentSummary();
             }
         });
 
