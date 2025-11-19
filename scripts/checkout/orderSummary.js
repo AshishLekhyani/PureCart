@@ -99,11 +99,12 @@ export function renderOrderSummary() {
     document.querySelectorAll('.js-delete-quantity-link').forEach((link) => {
         link.addEventListener('click', () => {
             const { productId } = link.dataset;
-            const container = document.querySelector(`.js-cart-item-container-${productId}`);
+            // const container = document.querySelector(`.js-cart-item-container-${productId}`);
 
-            container.remove();
             removeFromCart(productId);
-            calculateCartQuantity('.js-checkout-items');
+            //container.remove();
+            //calculateCartQuantity('.js-checkout-items');
+            renderOrderSummary();
             renderPaymentSummary();
         });
     });
