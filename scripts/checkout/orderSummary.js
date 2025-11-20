@@ -1,8 +1,7 @@
 import { cart, removeFromCart, calculateCartQuantity, updateCart, updateDeliveryOption } from '../../data/cart.js';
 import { products, getProduct } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
-import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
-import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
+import { deliveryOptions, getDeliveryOption, calculateDeliveryDate } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 
 export function renderOrderSummary() {
@@ -17,9 +16,7 @@ export function renderOrderSummary() {
         const { deliveryOptionId } = cartItem;
         const deliveryOption = getDeliveryOption(deliveryOptionId);
 
-        const today = dayjs();
-        const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
-        const dateString = deliveryDate.format('dddd, MMMM D');
+        const dateString = calculateDeliveryDate(deliveryOption);
 
         cartSummaryHTML += `
             <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
@@ -85,12 +82,14 @@ export function renderOrderSummary() {
         link.addEventListener('click', () => {
             saveUpdateQuantity(quantityInput, container, productId);
             renderPaymentSummary();
+            renderOrderSummary();
         });
 
         quantityInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
                 saveUpdateQuantity(quantityInput, container, productId);
                 renderPaymentSummary();
+                renderOrderSummary();
             }
         });
 
@@ -128,16 +127,14 @@ export function renderOrderSummary() {
             document.querySelector(`.js-quantity-label-${productId}`).innerHTML = newQuantity;
         }
 
-        calculateCartQuantity('.js-checkout-items');
+        //calculateCartQuantity('.js-checkout-items');
     }
 
     function deliveryOptionsHTML(matchingProduct, cartItem) {
         let html = '';
 
-        deliveryOptions.forEach((deliveryOption) => {
-            const today = dayjs();
-            const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
-            const dateString = deliveryDate.format('dddd, MMMM D');
+        deliveryOptions.forEach((deliveryOption) => {            
+            const dateString = calculateDeliveryDate(deliveryOption);
             const priceString = deliveryOption.priceCents === 0 ? 'FREE' : `${formatCurrency(deliveryOption.priceCents)} -`;
             const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
 
