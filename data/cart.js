@@ -1,4 +1,10 @@
-export let cart = JSON.parse(localStorage.getItem('cart')) || [];
+export let cart;
+
+loadFromStorage();
+
+export function loadFromStorage() {
+  cart = JSON.parse(localStorage.getItem('cart')) || [];
+}
 
 function saveToStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));
@@ -6,7 +12,9 @@ function saveToStorage() {
 
 export function addToCart(productId) {
   const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
-  const quantity = Number(quantitySelector.value);
+  const quantity = Number(quantitySelector.value); 
+  
+  // Number(quantitySelector?.value ?? 1); is saying if quantitySelector exist use .value and if that is null or undefined give undefined and if it's undefined use the fallback value
 
   let matchingItem;
 
