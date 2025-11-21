@@ -18,4 +18,8 @@ describe('test suit: formatCurrency', () => {
             expect(formatCurrency(2000.4)).toEqual('20.00');
         });
     });
+
+    it('works with negative values', () => {
+        expect(formatCurrency(-1090)).toEqual('-10.90');
+    });
 });
