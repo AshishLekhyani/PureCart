@@ -133,8 +133,6 @@ export function loadProductsFetch() {
 
 export function loadProducts(fun) {
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://supersimplebackend.dev/products');
-
   xhr.addEventListener('load', () => {
     products = JSON.parse(xhr.response).map((productDetails) => {
       if (productDetails.type === 'clothing') {
@@ -145,11 +143,12 @@ export function loadProducts(fun) {
       }
       return new Product(productDetails);
     })
-
+    
     console.log('load products');
     fun();
   });
-
+  
+  xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 }
 
