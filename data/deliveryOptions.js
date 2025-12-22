@@ -44,3 +44,21 @@ export function calculateDeliveryDate(deliveryOption) {
     const dateString = deliveryDate.format('dddd, MMMM D');
     return dateString;
 }
+
+export function recalibrateDate(givenTime) {
+    const currentTime = dayjs();
+    const estimatedTime = dayjs(givenTime);
+    let recalibratedTime = currentTime;
+
+    let daysRem = estimatedTime.diff(currentTime, 'days') + 1;
+
+    while(daysRem > 0) {
+        recalibratedTime = recalibratedTime.add(1, 'days');
+        
+        if (recalibratedTime.format('dddd') !== 'Saturday' && recalibratedTime.format('dddd') !== 'Sunday') {
+            daysRem--;
+        }
+    }
+
+    return recalibratedTime;
+}

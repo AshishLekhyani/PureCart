@@ -2,6 +2,7 @@ import { orders } from "../data/orders.js";
 import { getProduct, loadProductsFetch } from "../data/products.js";
 import { addToCart, calculateCartQuantity } from "../data/cart.js";
 import { formatCurrency } from "./utils/money.js";
+import { recalibrateDate } from "../data/deliveryOptions.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
 
@@ -50,7 +51,8 @@ async function loadOrders() {
 
         order.products.forEach((productDetails) => {
             const product = getProduct(productDetails.productId);
-
+            const deliveryDate = recalibrateDate(productDetails.estimatedDeliveryTime);
+            
             productsListHTML +=
                 `
                     <div class="product-image-container">
@@ -62,7 +64,7 @@ async function loadOrders() {
                             ${product.name}
                         </div>
                         <div class="product-delivery-date">
-                            Arriving on: ${dayjs(productDetails.estimatedDeliveryTime).format('MMMM D')}
+                            Arriving on: ${deliveryDate.format('MMMM D')}
                         </div>
                         <div class="product-quantity">
                             Quantity: ${productDetails.quantity}
