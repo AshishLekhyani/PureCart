@@ -1,6 +1,6 @@
 import { orders } from "../data/orders.js";
 import { getProduct, loadProductsFetch } from "../data/products.js";
-import { calculateCartQuantity } from "../data/cart.js";
+import { addToCart, calculateCartQuantity } from "../data/cart.js";
 import { formatCurrency } from "./utils/money.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
@@ -28,7 +28,7 @@ async function loadOrders() {
                         </div>
                         <div class="order-total">
                             <div class="order-header-label">Total:</div>
-                            <div>${formatCurrency(order.totalCostCents)}</div>
+                            <div>${formatCurrency(order.totalCostCents)} $</div>
                         </div>
                     </div>
 
@@ -67,14 +67,14 @@ async function loadOrders() {
                         <div class="product-quantity">
                             Quantity: ${productDetails.quantity}
                         </div>
-                        <button class="buy-again-button button-primary">
+                        <button class="buy-again-button button-primary js-buy-again-button" data-product-id = "${product.id}">
                             <img class="buy-again-icon" src="images/icons/buy-again.png">
                                 <span class="buy-again-message">Buy it again</span>
                         </button>
                     </div>
 
                     <div class="product-actions">
-                        <a href="tracking.html?orderId=${order.id}&prouctId=${product.id}">
+                        <a href="tracking.html?orderId=${order.id}&productId=${product.id}">
                             <button class="track-package-button button-secondary">
                                 Track package
                             </button>
@@ -87,6 +87,28 @@ async function loadOrders() {
     }
 
     document.querySelector('.js-orders-grid').innerHTML = orderSummaryHTML;
+
+    document.querySelectorAll('.js-buy-again-button').forEach((button) => {
+        let timeoutMsg;
+        button.addEventListener('click', () => {
+            const { productId } = button.dataset;
+            addToCart(productId);
+            calculateCartQuantity('.js-cart-quantity');
+
+            button.innerHTML = 'Added';
+
+            if(timeoutMsg){
+                clearTimeout(timeoutMsg);
+            }
+
+            timeoutMsg = setTimeout(() => {
+                button.innerHTML = `
+                    <img class="buy-again-icon" src="images/icons/buy-again.png">
+                    <span class="buy-again-message">Buy it again</span>
+                `;
+            }, 1000);
+        });
+    });
 
 }
 
