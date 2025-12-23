@@ -1,7 +1,11 @@
 import { calculateCartQuantity } from '../data/cart.js';
+import { recalibrateDate } from '../data/deliveryOptions.js';
 import { getOrder } from '../data/orders.js';
 import { getProduct, loadProductsFetch } from '../data/products.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+import { loadHeader } from './header/header.js';
+
+loadHeader();
 
 async function loadTracking() {
     await loadProductsFetch();
@@ -27,8 +31,10 @@ async function loadTracking() {
 
     const currentTime = dayjs();
     const orderTime = dayjs(order.orderTime);
-    const deliveryTime = dayjs(orderDetails.estimatedDeliveryTime);
+    const deliveryTime = recalibrateDate(orderTime, orderDetails.estimatedDeliveryTime)
     const deliveryProgress = ((currentTime - orderTime) / (deliveryTime - orderTime)) * 100;
+
+    const deliveredMessage = currentTime < deliveryTime ? 'Arriving on' : 'Delivered on'; 
 
     let trackingPageHTML = '';
 
@@ -39,7 +45,7 @@ async function loadTracking() {
         </a>
 
         <div class="delivery-date">
-          Arriving on ${dayjs(orderDetails.estimatedDeliveryTime).format('dddd, MMMM D')}
+          ${deliveredMessage} ${dayjs(deliveryTime).format('dddd, MMMM D')}
         </div>
 
         <div class="product-info">

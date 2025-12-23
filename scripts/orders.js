@@ -3,10 +3,12 @@ import { getProduct, loadProductsFetch } from "../data/products.js";
 import { addToCart, calculateCartQuantity } from "../data/cart.js";
 import { formatCurrency } from "./utils/money.js";
 import { recalibrateDate } from "../data/deliveryOptions.js";
+import { loadHeader } from "./header/header.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
 
 console.log(orders)
+loadHeader();
 
 async function loadOrders() {
     let orderSummaryHTML = '';
@@ -51,7 +53,7 @@ async function loadOrders() {
 
         order.products.forEach((productDetails) => {
             const product = getProduct(productDetails.productId);
-            const deliveryDate = recalibrateDate(productDetails.estimatedDeliveryTime);
+            const deliveryDate = recalibrateDate(order.orderTime, productDetails.estimatedDeliveryTime);
             
             productsListHTML +=
                 `

@@ -45,20 +45,29 @@ export function calculateDeliveryDate(deliveryOption) {
     return dateString;
 }
 
-export function recalibrateDate(givenTime) {
-    const currentTime = dayjs();
-    const estimatedTime = dayjs(givenTime);
-    let recalibratedTime = currentTime;
+export function recalibrateDate(orderPlacedAt, apiDeliveryDate) {
+    const start = dayjs(orderPlacedAt).startOf('day');
+    const end = dayjs(apiDeliveryDate).startOf('day');
 
-    let daysRem = estimatedTime.diff(currentTime, 'days') + 1;
+    let days = end.diff(start, 'day');
+    if (days <= 0) return start;
 
-    while(daysRem > 0) {
-        recalibratedTime = recalibratedTime.add(1, 'days');
-        
-        if (recalibratedTime.format('dddd') !== 'Saturday' && recalibratedTime.format('dddd') !== 'Sunday') {
-            daysRem--;
+    let result = start.clone();
+
+    // 1️⃣ Add full business weeks
+    const fullWeeks = Math.floor(days / 5);
+    result = result.add(fullWeeks * 7, 'day');
+    days -= fullWeeks * 5;
+
+    // 2️⃣ Handle remaining business days
+    while (days > 0) {
+        result = result.add(1, 'day');
+
+        const d = result.day(); // 0 = Sun, 6 = Sat
+        if (d !== 0 && d !== 6) {
+            days--;
         }
     }
 
-    return recalibratedTime;
+    return result;
 }
