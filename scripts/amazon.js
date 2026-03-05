@@ -1,38 +1,13 @@
 import { cart, addToCart, calculateCartQuantity } from '../data/cart.js';
-import { products, loadProducts } from '../data/products.js';
-import { loadHeader } from './header/header.js';
-//import { formatCurrency } from './utils/money.js';
+import { products } from '../data/products.js';
+import { formatCurrency } from './utils/money.js';
 
-loadHeader();
-loadProducts(renderProductsGrid);
+let productsHTML = '';
 
-function renderProductsGrid() {
-  calculateCartQuantity('.js-cart-quantity');
-  
-  let productsHTML = '';
+calculateCartQuantity('.js-cart-quantity');
 
-
-  const url = new URL(location.href);
-  const search = url.searchParams.get('search');
-
-  let filteredProducts = products;
-  
-  if(search) {
-    filteredProducts = products.filter((product) => {
-      let matchingKeyword = false;
-      
-      product.keywords.forEach((keyword) => {
-        if(keyword.toLowerCase().includes(search.toLocaleLowerCase())) {
-          matchingKeyword = true;
-        }
-      });
-
-      return matchingKeyword || product.name.toLowerCase().includes(search.toLowerCase());
-    });
-  }
-
-  filteredProducts.forEach((product) => {
-    productsHTML += `<div class="product-container">
+products.forEach((product) => {
+  productsHTML += `<div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
               src="${product.image}">
@@ -44,14 +19,14 @@ function renderProductsGrid() {
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="${product.getStarsUrl()}">
+              src="images/ratings/rating-${product.rating.stars * 10}.png">
             <div class="product-rating-count link-primary">
               ${product.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-            ${product.getPrice()}
+            $${formatCurrency(product.priceCents)}
           </div>
 
           <div class="product-quantity-container">
@@ -69,8 +44,6 @@ function renderProductsGrid() {
             </select>
           </div>
 
-          ${product.extraInfoHTML()}
-
           <div class="product-spacer"></div>
 
           <div class="added-to-cart js-added-to-cart-${product.id}">
@@ -82,35 +55,28 @@ function renderProductsGrid() {
             Add to Cart
           </button>
         </div>`;
-  });
+});
 
 
-  document.querySelector('.js-products-grid').innerHTML = productsHTML;
+document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-  document.querySelectorAll('.js-add-to-cart').forEach((button) => {
-    let addedMessage;
-    button.addEventListener('click', () => {
-      const { productId } = button.dataset;
+document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+  let addedMessage;
+  button.addEventListener('click', () => {
+    const { productId } = button.dataset;
 
-      const addToCartMessage = document.querySelector(`.js-added-to-cart-${productId}`);
-
-      addToCartMessage.classList.add('visible-added-to-cart');
-      setTimeout(() => {
-        if (addedMessage) {
-          clearTimeout(addedMessage);
-        }
-        addedMessage = setTimeout(() => { addToCartMessage.classList.remove('visible-added-to-cart'); }, 2000);
-      });
-
-      addToCart(productId);
-      calculateCartQuantity('.js-cart-quantity');
-
+    const addToCartMessage = document.querySelector(`.js-added-to-cart-${productId}`);
+    
+    addToCartMessage.classList.add('visible-added-to-cart');
+    setTimeout(() => {
+      if (addedMessage) {
+        clearTimeout(addedMessage);
+      }
+      addedMessage = setTimeout(() => { addToCartMessage.classList.remove('visible-added-to-cart'); }, 2000);
     });
-  });
 
-  // document.querySelector('.js-search-button')
-  //   .addEventListener('click', () => {
-  //     const search = document.querySelector('.js-search-bar').value;
-  //     window.location.href = `amazon.html?search=${search}`;
-  //   });
-}
+    addToCart(productId);
+    calculateCartQuantity('.js-cart-quantity');
+
+  });
+});

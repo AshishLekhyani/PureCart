@@ -1,0 +1,9 @@
+<svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- P Icon -->
+  <text x="12" y="38" font-family="'Arial', 'Helvetica', sans-serif" font-size="38" font-weight="900" fill="#000000">P</text>
+  
+  <!-- "Smile" Swoosh -->
+  <path d="M 5 44 Q 25 54 45 42" fill="none" stroke="#FF9900" stroke-width="4" stroke-linecap="round"/>
+  <polygon points="42,37 49,42 41,47" fill="#FF9900"/>
+  
+</svg>

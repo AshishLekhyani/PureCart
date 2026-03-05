@@ -1,18 +1,18 @@
-export function loadHeader() {
+﻿export function loadHeader() {
     let headerHTML = '';
     
     headerHTML =
     `
-    <div class="amazon-header-left-section">
-    <a href="amazon.html" class="header-link">
-    <img class="amazon-logo"
-    src="images/amazon-logo-white.png">
-    <img class="amazon-mobile-logo"
-    src="images/amazon-mobile-logo-white.png">
+    <div class="purecart-header-left-section">
+    <a href="index.html" class="header-link">
+    <img class="purecart-logo"
+    src="images/purecart-logo-white.svg">
+    <img class="purecart-mobile-logo"
+    src="images/purecart-mobile-logo-white.svg">
     </a>
     </div>
     
-    <div class="amazon-header-middle-section">
+    <div class="purecart-header-middle-section">
     <input class="search-bar js-search-bar" type="text" placeholder="Search">
     
     <button class="search-button js-search-button">
@@ -20,7 +20,7 @@ export function loadHeader() {
     </button>
     </div>
     
-    <div class="amazon-header-right-section">
+    <div class="purecart-header-right-section">
     <a class="orders-link header-link" href="orders.html">
     <span class="returns-text">Returns</span>
     <span class="orders-text">& Orders</span>
@@ -34,7 +34,7 @@ export function loadHeader() {
     </div>
     `;
 
-    document.querySelector('.js-amazon-header').innerHTML = headerHTML;
+    document.querySelector('.js-purecart-header').innerHTML = headerHTML;
 
     document.querySelector('.js-search-button').addEventListener('click', () => {
         search();
@@ -49,10 +49,11 @@ export function loadHeader() {
 
 function search() {
     const value = document.querySelector('.js-search-bar').value.trim();
-    const url = new URL('amazon.html', window.location.href);
+    const url = new URL('index.html', window.location.href);
 
     if (value) {
         url.searchParams.set('search', value); // replaces if exists, adds if not
         window.location.href = url.toString(); // .toString() converts URL object to string. 
     }
 }
+

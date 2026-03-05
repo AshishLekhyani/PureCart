@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Checkout</title>
+  <title>PureCart Project</title>
 
   <!-- This code is needed for responsive design to work.
       (Responsive design = make the website look good on
@@ -17,28 +17,19 @@
 
   <!-- Here are the CSS files for this page. -->
   <link rel="stylesheet" href="styles/shared/general.css">
-  <link rel="stylesheet" href="styles/pages/checkout/checkout-header.css">
-  <link rel="stylesheet" href="styles/pages/checkout/checkout.css">
-  <link rel="icon" type="image/svg+xml" href="images/icons/favicon-checkout.svg">
+  <link rel="stylesheet" href="styles/shared/purecart-header.css">
+  <link rel="stylesheet" href="styles/pages/purecart.css">
+  <link rel="icon" type="image/svg+xml" href="images/icons/favicon-index.svg">
   </head>
 
 <body>
-  <div class="checkout-header js-checkout-header">
-  </div>
+  <div class="purecart-header js-purecart-header"></div>
 
   <div class="main">
-    <div class="page-title">Review your order</div>
-
-    <div class="checkout-grid">
-      <div class="order-summary js-order-summary">
-      </div>
-
-      <div class="payment-summary js-payment-summary">
-      </div>
-    </div>
+    <div class="products-grid js-products-grid"></div>
   </div>
 
-  <script type="module" src="scripts/checkout.js"></script>
+  <script type="module" src="scripts/purecart.js"></script>
 </body>
 
 </html>

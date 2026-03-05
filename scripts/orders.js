@@ -6,8 +6,6 @@ import { recalibrateDate } from "../data/deliveryOptions.js";
 import { loadHeader } from "./header/header.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
-
-console.log(orders)
 loadHeader();
 
 async function loadOrders() {
@@ -54,7 +52,7 @@ async function loadOrders() {
         order.products.forEach((productDetails) => {
             const product = getProduct(productDetails.productId);
             const deliveryDate = recalibrateDate(order.orderTime, productDetails.estimatedDeliveryTime);
-            
+
             productsListHTML +=
                 `
                     <div class="product-image-container">
@@ -101,7 +99,7 @@ async function loadOrders() {
 
             button.innerHTML = 'Added';
 
-            if(timeoutMsg){
+            if (timeoutMsg) {
                 clearTimeout(timeoutMsg);
             }
 

@@ -14,11 +14,9 @@ function saveToStorage() {
 
 export function addToCart(productId) {
   const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
-  const quantity = Number(quantitySelector?.value ?? 1); 
-  
-  //Number(quantitySelector.value); 
-
-  // Number(quantitySelector?.value ?? 1); is saying if quantitySelector exist use .value and if that is null or undefined give undefined and if it's undefined use the fallback value
+  // Number(quantitySelector?.value ?? 1): if quantitySelector exists, use .value.
+  // If that is null/undefined, fall back to 1.
+  const quantity = Number(quantitySelector?.value ?? 1);
 
   let matchingItem;
 
@@ -65,20 +63,7 @@ export function removeFromCart(productId) {
   saveToStorage();
 }
 
-// OR export function removeFromCart(productId) {
-//              let index;
-
-//              cart.forEach( (cartItem, i) => {
-//                  if(cartItem.productId === productId) {
-//                      index = i;
-//                  }
-//              });
-
-//              cart.splice(index, 1);
-//              }
-
 export function updateCart(productId, newQuantity) {
-
   cart.forEach((cartItem) => {
     if (cartItem.productId === productId) {
       cartItem.quantity = newQuantity;
@@ -90,7 +75,7 @@ export function updateCart(productId, newQuantity) {
 
 export function updateDeliveryOption(productId, deliveryOptionId) {
   let matchingItem;
-  let optionId
+  let optionId;
 
   cart.forEach((cartItem) => {
     if (productId === cartItem.productId) {
@@ -98,29 +83,19 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
     }
   });
 
-  deliveryOptions.forEach((option) =>{
-    if(option.id === deliveryOptionId) {
+  deliveryOptions.forEach((option) => {
+    if (option.id === deliveryOptionId) {
       optionId = deliveryOptionId;
     }
-  });  
+  });
 
-  if(!matchingItem || !optionId) {
+  if (!matchingItem || !optionId) {
     return;
   }
   matchingItem.deliveryOptionId = deliveryOptionId;
   saveToStorage();
 }
 
-export function loadCart(fun) {
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener('load', () => {    
-    console.log(xhr.response);
-    fun();
-  });
-  
-  xhr.open('GET', 'https://supersimplebackend.dev/cart');
-  xhr.send();
-}
 
 export async function loadCartFetch() {
   const response = await fetch('https://supersimplebackend.dev/cart');
