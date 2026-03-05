@@ -65,7 +65,3 @@ The product catalog is fetched asynchronously from a dedicated external API prov
 *   **Fetch vs XHR:** The project was fully migrated to use the modern `fetch` API wrapping calls in `async/await` for cleaner asynchronous data flow, eliminating legacy `XMLHttpRequest` callbacks.
 *   **Data Driven UI:** The interface strictly reacts to changes in the data layer. For example, modifying `cart.js` guarantees the UI updates linearly when re-rendered.
 *   **No Frameworks:** Built intentionally without React or Vue to master the fundamentals of DOM manipulation, event delegation, and module bundling natively in the browser.
-
-## 🤝 Acknowledgements
-
-This project was built and expanded upon the foundational concepts taught in the excellent JavaScript courses provided by **[SuperSimpleDev](https://supersimplebackend.dev/)**. 
