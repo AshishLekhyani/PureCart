@@ -28,6 +28,7 @@ export default function CategoryView({ title, tagline, products }: Props) {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [activeLines, setActiveLines] = useState<string[]>([]);
   const [activeSizes, setActiveSizes] = useState<string[]>([]);
+  const [activeColors, setActiveColors] = useState<string[]>([]);
   const [saleOnly, setSaleOnly] = useState(false);
 
   const lines = useMemo(
@@ -40,10 +41,23 @@ export default function CategoryView({ title, tagline, products }: Props) {
     [products],
   );
 
+  // One swatch per colour name, keeping the first fill we saw for it.
+  const colors = useMemo(() => {
+    const seen = new Map<string, string>();
+    for (const product of products) {
+      for (const color of product.colors) {
+        if (!seen.has(color.name)) seen.set(color.name, color.hex);
+      }
+    }
+    return [...seen].sort((a, b) => a[0].localeCompare(b[0]));
+  }, [products]);
+
   const visible = useMemo(() => {
     const filtered = products.filter((product) => {
       if (activeLines.length && !activeLines.includes(product.line)) return false;
       if (activeSizes.length && !product.sizes.some((size) => activeSizes.includes(size)))
+        return false;
+      if (activeColors.length && !product.colors.some((color) => activeColors.includes(color.name)))
         return false;
       if (saleOnly && typeof product.compareAtCents !== "number") return false;
       return true;
@@ -56,9 +70,10 @@ export default function CategoryView({ title, tagline, products }: Props) {
       sorted.sort((a, b) => b.rating.stars - a.rating.stars || b.rating.count - a.rating.count);
 
     return sorted;
-  }, [products, activeLines, activeSizes, saleOnly, sort]);
+  }, [products, activeLines, activeSizes, activeColors, saleOnly, sort]);
 
-  const activeCount = activeLines.length + activeSizes.length + (saleOnly ? 1 : 0);
+  const activeCount =
+    activeLines.length + activeSizes.length + activeColors.length + (saleOnly ? 1 : 0);
 
   const toggle = (value: string, list: string[], setList: (next: string[]) => void) =>
     setList(list.includes(value) ? list.filter((entry) => entry !== value) : [...list, value]);
@@ -66,6 +81,7 @@ export default function CategoryView({ title, tagline, products }: Props) {
   const clearAll = () => {
     setActiveLines([]);
     setActiveSizes([]);
+    setActiveColors([]);
     setSaleOnly(false);
   };
 
@@ -136,10 +152,10 @@ export default function CategoryView({ title, tagline, products }: Props) {
       <div
         className={cn(
           "gutter border-line ease-out-soft overflow-hidden border-b transition-[max-height,opacity] duration-500",
-          filtersOpen ? "max-h-[32rem] opacity-100" : "max-h-0 border-transparent opacity-0",
+          filtersOpen ? "max-h-[44rem] opacity-100" : "max-h-0 border-transparent opacity-0",
         )}
       >
-        <div className="grid gap-10 py-8 md:grid-cols-3">
+        <div className="grid gap-10 py-8 sm:grid-cols-2 lg:grid-cols-4">
           <fieldset>
             <legend className="label-sm text-muted">Category</legend>
             <div className="mt-4 flex flex-wrap gap-2">
@@ -169,6 +185,36 @@ export default function CategoryView({ title, tagline, products }: Props) {
               </div>
             </fieldset>
           )}
+
+          <fieldset>
+            <legend className="label-sm text-muted">Colour</legend>
+            <div className="mt-4 flex flex-wrap gap-2.5">
+              {colors.map(([name, hex]) => {
+                const active = activeColors.includes(name);
+
+                return (
+                  <button
+                    key={name}
+                    type="button"
+                    onClick={() => toggle(name, activeColors, setActiveColors)}
+                    aria-pressed={active}
+                    title={name}
+                    className={cn(
+                      "size-7 border transition-all",
+                      active ? "border-ink p-0.5" : "hover:border-line border-transparent",
+                    )}
+                  >
+                    <span className="sr-only">{name}</span>
+                    <span
+                      aria-hidden
+                      className="border-line block size-full border"
+                      style={{ background: hex }}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
 
           <fieldset>
             <legend className="label-sm text-muted">Price</legend>

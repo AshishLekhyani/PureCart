@@ -6,7 +6,7 @@ import type { CategoryId } from "@/lib/types";
 
 type Params = { params: Promise<{ category: string }> };
 
-/** `new` is a merchandising view over the whole range rather than a department. */
+/** `new` and `sale` are merchandising views over the whole range, not departments. */
 function resolveView(slug: string) {
   if (slug === "new") {
     return {
@@ -15,6 +15,20 @@ function resolveView(slug: string) {
       products: [...products].sort(
         (a, b) => Number(b.badges.includes("new")) - Number(a.badges.includes("new")),
       ),
+    };
+  }
+
+  if (slug === "sale") {
+    return {
+      title: "Sale",
+      tagline: "Reduced while stock lasts. Deepest markdowns first.",
+      products: products
+        .filter((product) => typeof product.compareAtCents === "number")
+        .sort(
+          (a, b) =>
+            (b.compareAtCents! - b.priceCents) / b.compareAtCents! -
+            (a.compareAtCents! - a.priceCents) / a.compareAtCents!,
+        ),
     };
   }
 
@@ -29,7 +43,11 @@ function resolveView(slug: string) {
 }
 
 export function generateStaticParams() {
-  return [...categories.map((category) => ({ category: category.id })), { category: "new" }];
+  return [
+    ...categories.map((category) => ({ category: category.id })),
+    { category: "new" },
+    { category: "sale" },
+  ];
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
