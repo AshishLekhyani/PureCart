@@ -1,28 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useRef } from "react";
 import { X } from "lucide-react";
 import { categories } from "@/lib/catalog";
 import { cn } from "@/lib/utils";
+import { useDialog } from "@/hooks/useDialog";
 
 export default function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (event: KeyboardEvent) => event.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [open, onClose]);
+  const panelRef = useRef<HTMLDivElement>(null);
+  useDialog({ open, onClose, ref: panelRef });
 
   return (
     <div
+      ref={panelRef}
       role="dialog"
       aria-modal="true"
-      aria-hidden={!open}
+      inert={!open}
       className={cn(
         "bg-paper ease-out-soft fixed inset-0 z-60 transition-transform duration-500 lg:hidden",
         open ? "translate-x-0" : "pointer-events-none -translate-x-full",

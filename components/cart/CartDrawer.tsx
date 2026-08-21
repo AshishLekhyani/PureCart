@@ -2,31 +2,27 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useRef } from "react";
 import { X } from "lucide-react";
 import { useCart, selectLines, selectSubtotal, selectCount } from "@/store/cart";
 import { formatPrice, FREE_SHIPPING_THRESHOLD_CENTS } from "@/lib/money";
 import { cn } from "@/lib/utils";
+import { useDialog } from "@/hooks/useDialog";
+import { products } from "@/lib/catalog";
 import QuantityStepper from "./QuantityStepper";
+
+const suggestions = products.filter((product) => product.badges.includes("bestseller")).slice(0, 2);
 
 export default function CartDrawer() {
   const { items, isOpen, hydrated, closeDrawer, remove, setQuantity } = useCart();
+  const panelRef = useRef<HTMLElement>(null);
 
   const lines = selectLines(items);
   const subtotal = selectSubtotal(items);
   const count = selectCount(items);
   const remaining = FREE_SHIPPING_THRESHOLD_CENTS - subtotal;
 
-  useEffect(() => {
-    if (!isOpen) return;
-    const onKey = (event: KeyboardEvent) => event.key === "Escape" && closeDrawer();
-    window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [isOpen, closeDrawer]);
+  useDialog({ open: isOpen, onClose: closeDrawer, ref: panelRef });
 
   return (
     <>
@@ -34,17 +30,21 @@ export default function CartDrawer() {
         aria-hidden
         onClick={closeDrawer}
         className={cn(
-          "bg-ink/35 fixed inset-0 z-[70] transition-opacity duration-500",
+          "bg-ink/35 fixed inset-0 z-70 transition-opacity duration-500",
           isOpen ? "opacity-100" : "pointer-events-none opacity-0",
         )}
       />
 
       <aside
+        ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-label="Shopping bag"
+        // Hidden from the tab order when closed, or its links stay reachable
+        // behind the page while the panel sits off-screen.
+        inert={!isOpen}
         className={cn(
-          "border-line bg-paper ease-out-soft fixed top-0 right-0 z-[80] flex h-full w-full max-w-md flex-col border-l transition-transform duration-500",
+          "border-line bg-paper ease-out-soft fixed top-0 right-0 z-80 flex h-full w-full max-w-md flex-col border-l transition-transform duration-500",
           isOpen ? "translate-x-0" : "translate-x-full",
         )}
       >
@@ -58,14 +58,46 @@ export default function CartDrawer() {
         </header>
 
         {lines.length === 0 ? (
-          <div className="flex flex-1 flex-col items-center justify-center gap-6 px-8 text-center">
-            <p className="display text-3xl">Your bag is empty</p>
-            <p className="text-muted">
-              Nothing in here yet. The new season is a good place to start.
-            </p>
-            <Link href="/shop/new" onClick={closeDrawer} className="btn btn-solid">
-              Shop New In
-            </Link>
+          <div className="flex-1 overflow-y-auto">
+            <div className="flex flex-col items-center gap-6 px-8 py-14 text-center">
+              <p className="display text-3xl">Your bag is empty</p>
+              <p className="text-muted">
+                Nothing in here yet. The new season is a good place to start.
+              </p>
+              <Link href="/shop/new" onClick={closeDrawer} className="btn btn-solid">
+                Shop New In
+              </Link>
+            </div>
+
+            {/* An empty bag is the one place a suggestion is genuinely useful. */}
+            <div className="border-line border-t px-6 py-8">
+              <p className="label-sm text-muted">Most wanted</p>
+              <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-6">
+                {suggestions.map((product) => (
+                  <li key={product.id}>
+                    <Link
+                      href={`/product/${product.slug}`}
+                      onClick={closeDrawer}
+                      className="group block"
+                    >
+                      <div className="bg-sand relative aspect-3/4 overflow-hidden">
+                        <Image
+                          src={product.colors[0].image}
+                          alt={product.name}
+                          fill
+                          sizes="180px"
+                          className="ease-out-soft object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      </div>
+                      <p className="label mt-3">{product.name}</p>
+                      <p className="label-sm text-muted mt-1 tabular-nums">
+                        {formatPrice(product.priceCents)}
+                      </p>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         ) : (
           <>

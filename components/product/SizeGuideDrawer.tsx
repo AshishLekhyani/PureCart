@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useRef } from "react";
 import { X } from "lucide-react";
 import SizeTable from "./SizeTable";
 import type { SizeTable as SizeTableData } from "@/lib/sizeGuide";
 import { cn } from "@/lib/utils";
+import { useDialog } from "@/hooks/useDialog";
 
 type Props = {
   open: boolean;
@@ -15,16 +16,8 @@ type Props = {
 };
 
 export default function SizeGuideDrawer({ open, onClose, table }: Props) {
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (event: KeyboardEvent) => event.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [open, onClose]);
+  const panelRef = useRef<HTMLElement>(null);
+  useDialog({ open, onClose, ref: panelRef });
 
   return (
     <>
@@ -38,9 +31,11 @@ export default function SizeGuideDrawer({ open, onClose, table }: Props) {
       />
 
       <aside
+        ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-label="Size guide"
+        inert={!open}
         className={cn(
           "border-line bg-paper ease-out-soft fixed top-0 right-0 z-80 flex h-full w-full max-w-lg flex-col border-l transition-transform duration-500",
           open ? "translate-x-0" : "translate-x-full",
