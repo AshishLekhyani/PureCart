@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { categories } from "@/lib/catalog";
+import NewsletterForm from "./NewsletterForm";
 
 const columns = [
   {
@@ -27,23 +28,7 @@ export default function Footer() {
             louder than it needs to be.
           </p>
 
-          <form className="mt-8 max-w-xs" aria-label="Newsletter signup">
-            <label htmlFor="newsletter" className="label-sm text-muted">
-              Join the list
-            </label>
-            <div className="mt-2 flex items-end gap-3">
-              <input
-                id="newsletter"
-                type="email"
-                placeholder="Email address"
-                className="field flex-1"
-                autoComplete="email"
-              />
-              <button type="submit" className="label link-underline pb-3">
-                Sign up
-              </button>
-            </div>
-          </form>
+          <NewsletterForm />
         </div>
 
         <div>
