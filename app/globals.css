@@ -1,0 +1,239 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   PureCart design tokens
+
+   The whole store is built from four neutrals, one accent, and two typefaces.
+   No border radius and no shadows anywhere: depth comes from hairlines,
+   whitespace, and photography.
+--------------------------------------------------------------------------- */
+
+@theme {
+  --color-ink: #0e0e0e;
+  --color-ink-soft: #3d3b38;
+  --color-muted: #78746e;
+  --color-line: #e3dfd8;
+  --color-paper: #ffffff;
+  --color-sand: #f5f2ed;
+  --color-sale: #a8332b;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bodoni), "Times New Roman", serif;
+
+  --radius-none: 0px;
+
+  --spacing-gutter: clamp(1rem, 4vw, 3.5rem);
+
+  --ease-out-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-line);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  ::selection {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  /* A single hairline focus ring, consistent across every interactive element. */
+  :focus-visible {
+    outline: 1px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+
+  /* The browser's own search clear button ignores the palette; we supply our own. */
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+
+@layer components {
+  /* The small uppercase label that carries most of the interface. */
+  .label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .label-sm {
+    font-size: 0.625rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  /* Editorial display type: high-contrast serif, tight leading, no tracking. */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.94;
+    letter-spacing: -0.015em;
+  }
+
+  /* Underline that grows from the left on hover — used on every text link. */
+  .link-underline {
+    position: relative;
+    display: inline-block;
+  }
+
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease-out-soft);
+  }
+
+  .link-underline:hover::after,
+  .link-underline[data-active="true"]::after {
+    transform: scaleX(1);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    padding: 1.0625rem 2rem;
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border: 1px solid var(--color-ink);
+    transition:
+      background-color 0.3s var(--ease-out-soft),
+      color 0.3s var(--ease-out-soft),
+      opacity 0.3s var(--ease-out-soft);
+  }
+
+  .btn-solid {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .btn-solid:hover:not(:disabled) {
+    background-color: transparent;
+    color: var(--color-ink);
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    color: var(--color-ink);
+  }
+
+  .btn-outline:hover:not(:disabled) {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .field {
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--color-line);
+    padding: 0.75rem 0;
+    font-size: 0.875rem;
+    transition: border-color 0.3s var(--ease-out-soft);
+  }
+
+  .field::placeholder {
+    color: var(--color-muted);
+  }
+
+  .field:focus {
+    outline: none;
+    border-bottom-color: var(--color-ink);
+  }
+
+  .gutter {
+    padding-inline: var(--spacing-gutter);
+  }
+}
+
+@layer utilities {
+  /* Staggered entrance for grids and editorial blocks. */
+  .reveal {
+    animation: reveal 0.8s var(--ease-out-soft) both;
+  }
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .marquee-track {
+    animation: marquee 38s linear infinite;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
