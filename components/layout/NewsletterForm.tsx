@@ -5,7 +5,6 @@ import { Check } from "lucide-react";
 
 type Status = "idle" | "invalid" | "signed-up";
 
-// Deliberately permissive: something@something.tld, no attempt at RFC 5322.
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export default function NewsletterForm() {

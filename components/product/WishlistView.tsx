@@ -10,7 +10,6 @@ export default function WishlistView() {
 
   if (!hydrated) return <div className="gutter py-32" aria-busy="true" />;
 
-  // Ids outlive the catalogue, so drop anything that no longer resolves.
   const saved = ids.flatMap((id) => {
     const product = getProduct(id);
     return product ? [product] : [];

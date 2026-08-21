@@ -5,7 +5,6 @@ import { Minus, Plus } from "lucide-react";
 type Props = {
   value: number;
   onChange: (quantity: number) => void;
-  /** Below 1 the line is removed by the caller. */
   min?: number;
 };
 

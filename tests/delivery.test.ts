@@ -7,7 +7,6 @@ import {
   getShipmentProgress,
 } from "@/lib/delivery";
 
-// Monday 5 January 2026, chosen so weekday arithmetic is easy to read.
 const MONDAY = new Date(2026, 0, 5);
 const FRIDAY = new Date(2026, 0, 9);
 
@@ -23,12 +22,12 @@ describe("getDeliveryOption", () => {
 
 describe("addBusinessDays", () => {
   it("advances within the same week", () => {
-    expect(addBusinessDays(MONDAY, 3).getDate()).toBe(8); // Thursday
+    expect(addBusinessDays(MONDAY, 3).getDate()).toBe(8);
   });
 
   it("skips the weekend", () => {
     const result = addBusinessDays(FRIDAY, 1);
-    expect(result.getDay()).toBe(1); // Monday
+    expect(result.getDay()).toBe(1);
     expect(result.getDate()).toBe(12);
   });
 

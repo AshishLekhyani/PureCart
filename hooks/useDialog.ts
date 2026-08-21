@@ -14,16 +14,9 @@ const FOCUSABLE = [
 type Options = {
   open: boolean;
   onClose: () => void;
-  /** The dialog container. Focus is moved into it and kept there while open. */
   ref: RefObject<HTMLElement | null>;
 };
 
-/**
- * The behaviour every overlay in the store shares: Escape closes it, the page
- * behind it stops scrolling, Tab cycles within it, and focus returns to
- * whatever opened it. Declaring `aria-modal` without this is a promise the
- * markup does not keep.
- */
 export function useDialog({ open, onClose, ref }: Options) {
   useEffect(() => {
     if (!open) return;
@@ -36,8 +29,6 @@ export function useDialog({ open, onClose, ref }: Options) {
         (element) => element.offsetParent !== null,
       );
 
-    // Focus the first control rather than the container, so screen readers
-    // announce something actionable instead of an empty region.
     focusables()[0]?.focus();
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -58,7 +49,6 @@ export function useDialog({ open, onClose, ref }: Options) {
       const last = elements[elements.length - 1];
       const active = document.activeElement;
 
-      // Wrap at both ends, and pull focus back in if it has escaped the dialog.
       if (event.shiftKey && (active === first || !container?.contains(active))) {
         event.preventDefault();
         last.focus();

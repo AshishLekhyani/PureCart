@@ -11,7 +11,6 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Stands in for the reporting service a production storefront would call.
     console.error(error);
   }, [error]);
 

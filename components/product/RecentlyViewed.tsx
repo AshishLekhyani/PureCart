@@ -6,7 +6,6 @@ import { getProduct } from "@/lib/catalog";
 import ProductRail from "./ProductRail";
 
 type Props = {
-  /** Recorded on mount and excluded from the rail. */
   currentProductId?: string;
 };
 
@@ -26,7 +25,6 @@ export default function RecentlyViewed({ currentProductId }: Props) {
       return product ? [product] : [];
     });
 
-  // One lonely card is not a rail; wait until there is something to scroll.
   if (products.length < 2) return null;
 
   return <ProductRail title="Recently viewed" products={products} />;

@@ -2,10 +2,6 @@ import { absoluteUrl, siteDescription, siteName, siteUrl } from "@/lib/site";
 import { formatCurrency } from "@/lib/money";
 import type { Product } from "@/lib/types";
 
-/**
- * Structured data is injected as a script tag rather than rendered markup, so the
- * JSON is serialised here and the closing-tag sequence escaped to keep it inert.
- */
 function JsonLd({ data }: { data: Record<string, unknown> }) {
   return (
     <script

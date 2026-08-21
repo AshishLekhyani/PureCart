@@ -41,7 +41,6 @@ export default function CategoryView({ title, tagline, products }: Props) {
     [products],
   );
 
-  // One swatch per colour name, keeping the first fill we saw for it.
   const colors = useMemo(() => {
     const seen = new Map<string, string>();
     for (const product of products) {
@@ -92,7 +91,6 @@ export default function CategoryView({ title, tagline, products }: Props) {
         <p className="text-muted mt-3 max-w-md">{tagline}</p>
       </header>
 
-      {/* Control bar */}
       <div className="gutter border-line bg-paper/95 sticky top-16 z-30 mt-10 flex items-center justify-between gap-4 border-y py-3 backdrop-blur-sm lg:top-20">
         <button
           type="button"
@@ -110,7 +108,6 @@ export default function CategoryView({ title, tagline, products }: Props) {
         </p>
 
         <div className="flex items-center gap-5">
-          {/* Grid density */}
           <div className="hidden items-center gap-1 lg:flex" role="group" aria-label="Grid density">
             {([2, 4] as const).map((value) => (
               <button
@@ -148,7 +145,6 @@ export default function CategoryView({ title, tagline, products }: Props) {
         </div>
       </div>
 
-      {/* Filter panel */}
       <div
         className={cn(
           "gutter border-line ease-out-soft overflow-hidden border-b transition-[max-height,opacity] duration-500",

@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 type Props = {
   productId: string;
   productName: string;
-  /** `overlay` floats on top of a product image; `inline` sits in a row of controls. */
   variant?: "overlay" | "inline";
   className?: string;
 };
@@ -22,7 +21,6 @@ export default function WishlistButton({
   const hydrated = useWishlist((state) => state.hydrated);
   const toggle = useWishlist((state) => state.toggle);
 
-  // Before rehydration every heart reads as empty, which matches the server render.
   const saved = hydrated && ids.includes(productId);
 
   return (

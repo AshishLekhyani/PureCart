@@ -6,7 +6,6 @@ const MESSAGES = [
 ];
 
 export default function Marquee() {
-  // The list is rendered twice so the track can loop seamlessly at -50%.
   const track = [...MESSAGES, ...MESSAGES];
 
   return (

@@ -27,8 +27,6 @@ export default function Header() {
   const savedCount = wishlistHydrated ? savedIds.length : 0;
 
   const isHome = pathname === "/";
-  // On the home page the header floats over the light hero — no rule, no fill —
-  // until the user scrolls past it and it settles onto paper.
   const overlay = isHome && !scrolled && !searchOpen && !menuOpen;
 
   useEffect(() => {
@@ -54,7 +52,6 @@ export default function Header() {
         )}
       >
         <div className="gutter flex h-16 items-center justify-between gap-6 lg:h-20">
-          {/* Left — desktop navigation, mobile menu trigger */}
           <nav className="hidden flex-1 items-center gap-7 lg:flex">
             {categories.map((category) => (
               <Link
@@ -91,14 +88,12 @@ export default function Header() {
             <Menu className="size-5" strokeWidth={1.25} />
           </button>
 
-          {/* Centre — wordmark */}
           <Link href="/" aria-label="PureCart home" className="shrink-0">
             <span className="display text-[1.5rem] tracking-[0.2em] uppercase lg:text-[1.75rem]">
               PureCart
             </span>
           </Link>
 
-          {/* Right — utilities */}
           <div className="flex flex-1 items-center justify-end gap-5 lg:gap-7">
             <button
               type="button"

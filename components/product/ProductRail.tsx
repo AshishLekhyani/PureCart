@@ -14,7 +14,6 @@ type Props = {
   cta?: string;
 };
 
-/** A horizontally scrolling row of cards — the shop-the-edit strip. */
 export default function ProductRail({ title, products, href, cta = "View all" }: Props) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
@@ -26,7 +25,6 @@ export default function ProductRail({ title, products, href, cta = "View all" }:
 
     const maxScroll = track.scrollWidth - track.clientWidth;
     setAtStart(track.scrollLeft <= 1);
-    // A rail that fits on screen is at both edges at once, which greys out both arrows.
     setAtEnd(maxScroll <= 1 || track.scrollLeft >= maxScroll - 1);
   }, []);
 
@@ -56,8 +54,6 @@ export default function ProductRail({ title, products, href, cta = "View all" }:
             </Link>
           )}
 
-          {/* Arrows only duplicate what the scrollbar already does, so they stay
-              out of the tab order rather than adding two stops per rail. */}
           <div className="hidden items-center gap-2 lg:flex" aria-hidden>
             <RailArrow direction="left" disabled={atStart} onClick={() => scrollByPage(-1)} />
             <RailArrow direction="right" disabled={atEnd} onClick={() => scrollByPage(1)} />

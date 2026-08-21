@@ -1,13 +1,5 @@
 @import "tailwindcss";
 
-/* ---------------------------------------------------------------------------
-   PureCart design tokens
-
-   The whole store is built from four neutrals, one accent, and two typefaces.
-   No border radius and no shadows anywhere: depth comes from hairlines,
-   whitespace, and photography.
---------------------------------------------------------------------------- */
-
 @theme {
   --color-ink: #0e0e0e;
   --color-ink-soft: #3d3b38;
@@ -53,7 +45,6 @@
     color: var(--color-paper);
   }
 
-  /* A single hairline focus ring, consistent across every interactive element. */
   :focus-visible {
     outline: 1px solid var(--color-ink);
     outline-offset: 3px;
@@ -67,7 +58,6 @@
     color: inherit;
   }
 
-  /* The browser's own search clear button ignores the palette; we supply our own. */
   input[type="search"]::-webkit-search-cancel-button,
   input[type="search"]::-webkit-search-decoration {
     -webkit-appearance: none;
@@ -76,7 +66,6 @@
 }
 
 @layer components {
-  /* The small uppercase label that carries most of the interface. */
   .label {
     font-size: 0.6875rem;
     letter-spacing: 0.16em;
@@ -91,7 +80,6 @@
     line-height: 1.4;
   }
 
-  /* Editorial display type: high-contrast serif, tight leading, no tracking. */
   .display {
     font-family: var(--font-display);
     font-weight: 400;
@@ -99,7 +87,6 @@
     letter-spacing: -0.015em;
   }
 
-  /* Underline that grows from the left on hover — used on every text link. */
   .link-underline {
     position: relative;
     display: inline-block;
@@ -189,7 +176,6 @@
 }
 
 @layer utilities {
-  /* Staggered entrance for grids and editorial blocks. */
   .reveal {
     animation: reveal 0.8s var(--ease-out-soft) both;
   }
@@ -205,12 +191,6 @@
     }
   }
 
-  /*
-   * Sections lift into place as they scroll in, driven entirely by the view
-   * timeline. Guarded by @supports so browsers without it get no animation at
-   * all rather than content that starts invisible and never arrives — the
-   * effect is decoration, and it must never be what makes the page readable.
-   */
   @supports (animation-timeline: view()) {
     .reveal-on-scroll {
       animation: reveal 0.9s var(--ease-out-soft) both;

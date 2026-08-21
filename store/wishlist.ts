@@ -4,7 +4,6 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 type WishlistState = {
-  /** Product ids, newest first. */
   ids: string[];
   hydrated: boolean;
   toggle: (productId: string) => void;

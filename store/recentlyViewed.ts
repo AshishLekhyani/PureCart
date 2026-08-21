@@ -6,7 +6,6 @@ import { persist } from "zustand/middleware";
 const LIMIT = 12;
 
 type RecentlyViewedState = {
-  /** Product ids, most recently viewed first. */
   ids: string[];
   hydrated: boolean;
   record: (productId: string) => void;
@@ -19,7 +18,6 @@ export const useRecentlyViewed = create<RecentlyViewedState>()(
       ids: [],
       hydrated: false,
 
-      // Re-viewing a piece moves it back to the front rather than duplicating it.
       record: (productId) =>
         set((state) => ({
           ids: [productId, ...state.ids.filter((id) => id !== productId)].slice(0, LIMIT),

@@ -8,15 +8,8 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt = "PureCart product";
 
-// The OG runtime ships no serif, so the display face is embedded rather than
-// named — otherwise the card silently falls back to a generic sans.
 const displayFont = readFile(path.join(process.cwd(), "assets/fonts/BodoniModa-Regular.ttf"));
 
-/**
- * Share card for a product. The OG runtime supports a small subset of CSS —
- * flexbox only, no stylesheets — so this is written in plain inline styles
- * rather than reusing the site's Tailwind classes.
- */
 export default async function OpengraphImage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const product = getProductBySlug(slug);

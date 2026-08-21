@@ -10,7 +10,6 @@ import type { CartItem, Product } from "@/lib/types";
 type CartState = {
   items: CartItem[];
   isOpen: boolean;
-  /** False until the persisted cart has been read back from localStorage. */
   hydrated: boolean;
   add: (product: Product, colorName: string, size: string, quantity?: number) => void;
   remove: (key: string) => void;
@@ -75,14 +74,11 @@ export const useCart = create<CartState>()(
     }),
     {
       name: "purecart.cart",
-      // Only the line items are persisted; drawer and hydration state are per-session.
       partialize: (state) => ({ items: state.items }),
       onRehydrateStorage: () => (state) => state?.markHydrated(),
     },
   ),
 );
-
-/* --------------------------- Derived selectors --------------------------- */
 
 export type CartLine = {
   key: string;
@@ -91,7 +87,6 @@ export type CartLine = {
   lineTotalCents: number;
 };
 
-/** Cart items joined against the catalog; unknown product ids are dropped. */
 export function selectLines(items: CartItem[]): CartLine[] {
   return items.flatMap((item) => {
     const product = getProduct(item.productId);
@@ -114,7 +109,6 @@ export const selectCount = (items: CartItem[]) =>
 export const selectSubtotal = (items: CartItem[]) =>
   selectLines(items).reduce((total, line) => total + line.lineTotalCents, 0);
 
-/** Shipping is charged once, at the fastest speed any line asked for. */
 export const selectShipping = (items: CartItem[]) =>
   items.reduce(
     (max, item) => Math.max(max, getDeliveryOption(item.deliveryOptionId).priceCents),

@@ -56,18 +56,11 @@ export const sizeTables: SizeTable[] = [
 
 const [clothing, trousers, footwear] = sizeTables;
 
-/**
- * The table matching a product's size run, or null when no chart applies — sock
- * packs sized S/M and homeware sized Queen are not body measurements, and showing
- * them a clothing chart would be worse than showing nothing.
- */
 export function tableForSizes(sizes: string[]): SizeTable | null {
   if (sizes.length === 0) return null;
 
   const numeric = sizes.filter((size) => /^\d{2}$/.test(size)).map(Number);
   if (numeric.length > 0) {
-    // Waist runs open at 28, shoe runs open at 36, and they overlap at 36-38.
-    // Where the run *starts* separates them; any single size in it does not.
     return Math.min(...numeric) >= 36 ? footwear : trousers;
   }
 

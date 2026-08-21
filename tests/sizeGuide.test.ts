@@ -29,7 +29,6 @@ describe("tableForSizes", () => {
   });
 
   it("keeps a waist run that reaches 38 on the trouser chart", () => {
-    // 36 and 38 exist in both runs; the opening size is what separates them.
     expect(tableForSizes(["28", "30", "32", "34", "36", "38"])?.id).toBe("trousers");
   });
 

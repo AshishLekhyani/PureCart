@@ -11,7 +11,6 @@ export const deliveryOptions: DeliveryOption[] = [
   { id: "3", name: "Next Day", businessDays: 1, priceCents: 1495 },
 ];
 
-/** The baseline fee that the free-shipping threshold waives. */
 export const STANDARD_SHIPPING_CENTS = deliveryOptions[0].priceCents;
 
 export function getDeliveryOption(id: string): DeliveryOption {
@@ -20,7 +19,6 @@ export function getDeliveryOption(id: string): DeliveryOption {
 
 const isWeekend = (date: Date) => date.getDay() === 0 || date.getDay() === 6;
 
-/** Advances `from` by `businessDays`, skipping Saturdays and Sundays. */
 export function addBusinessDays(from: Date, businessDays: number): Date {
   const date = new Date(from);
   let remaining = businessDays;
@@ -49,14 +47,9 @@ export type ShipmentStage = "Preparing" | "Shipped" | "Delivered";
 
 export type ShipmentProgress = {
   stage: ShipmentStage;
-  /** 0–100, how far along the order is between placement and delivery. */
   percent: number;
 };
 
-/**
- * Where a shipment sits between when it was placed and when it should arrive.
- * Preparing below a third of the way, Shipped up to arrival, Delivered after.
- */
 export function getShipmentProgress(
   placedAtMs: number,
   estimatedDeliveryMs: number,

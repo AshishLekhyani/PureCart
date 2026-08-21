@@ -11,7 +11,6 @@ import { useDialog } from "@/hooks/useDialog";
 type Props = {
   open: boolean;
   onClose: () => void;
-  /** The chart matching this product's size run. */
   table: SizeTableData;
 };
 

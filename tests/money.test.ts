@@ -37,7 +37,7 @@ describe("calculateTotals", () => {
     const totals = calculateTotals(5000, STANDARD_SHIPPING_CENTS);
 
     expect(totals.shippingCents).toBe(495);
-    expect(totals.taxCents).toBe(550); // 10% of 5495
+    expect(totals.taxCents).toBe(550);
     expect(totals.totalCents).toBe(6045);
   });
 

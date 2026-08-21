@@ -1,11 +1,9 @@
 import { cn } from "@/lib/utils";
 
-/** A neutral placeholder block. Pulses only where motion is welcome. */
 export function Skeleton({ className }: { className?: string }) {
   return <div aria-hidden className={cn("bg-sand animate-pulse", className)} />;
 }
 
-/** Placeholder matching a ProductCard's footprint. */
 export function ProductCardSkeleton() {
   return (
     <div>

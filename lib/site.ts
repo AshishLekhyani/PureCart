@@ -1,4 +1,3 @@
-/** Canonical origin. Vercel supplies the deployment host; fall back for local builds. */
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
   ? process.env.NEXT_PUBLIC_SITE_URL
   : process.env.VERCEL_PROJECT_PRODUCTION_URL
