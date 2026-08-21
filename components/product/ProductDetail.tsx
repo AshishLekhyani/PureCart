@@ -2,12 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Minus, Plus, Star, Truck } from "lucide-react";
 import { useCart } from "@/store/cart";
 import { formatPrice } from "@/lib/money";
 import { deliveryOptions, estimateDelivery, formatDeliveryDate } from "@/lib/delivery";
 import { cn } from "@/lib/utils";
+import WishlistButton from "./WishlistButton";
+import SizeGuideDrawer from "./SizeGuideDrawer";
+import { tableForSizes } from "@/lib/sizeGuide";
 import type { Product } from "@/lib/types";
 
 export default function ProductDetail({ product }: { product: Product }) {
@@ -16,9 +19,16 @@ export default function ProductDetail({ product }: { product: Product }) {
   const [colorIndex, setColorIndex] = useState(0);
   const [size, setSize] = useState<string | null>(product.sizes.length ? null : "");
   const [showSizeError, setShowSizeError] = useState(false);
+  const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
+
+  // The sticky mobile bar appears once the real add-to-bag button scrolls away.
+  const addButtonRef = useRef<HTMLDivElement>(null);
+  const [showStickyBar, setShowStickyBar] = useState(false);
 
   const color = product.colors[colorIndex];
   const onSale = typeof product.compareAtCents === "number";
+  // Null for sock packs and homeware, where a body-measurement chart says nothing.
+  const sizeGuide = tableForSizes(product.sizes);
 
   // The chosen colourway leads; the rest of the range follows it down the page.
   const gallery = useMemo(
@@ -32,9 +42,24 @@ export default function ProductDetail({ product }: { product: Product }) {
     setArrival(formatDeliveryDate(estimateDelivery(deliveryOptions[0])));
   }, []);
 
+  useEffect(() => {
+    const target = addButtonRef.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowStickyBar(!entry.isIntersecting && entry.boundingClientRect.top < 0),
+      { threshold: 0 },
+    );
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, []);
+
   const handleAdd = () => {
     if (size === null) {
       setShowSizeError(true);
+      // Scrolling the picker back into view is the only useful response on mobile,
+      // where the request came from the sticky bar rather than the form itself.
+      addButtonRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
     add(product, color.name, size);
@@ -152,9 +177,15 @@ export default function ProductDetail({ product }: { product: Product }) {
             <div className="mt-8">
               <div className="flex items-baseline justify-between">
                 <p className="label-sm">Size</p>
-                <Link href="/size-guide" className="label-sm link-underline text-muted">
-                  Size guide
-                </Link>
+                {sizeGuide && (
+                  <button
+                    type="button"
+                    onClick={() => setSizeGuideOpen(true)}
+                    className="label-sm link-underline text-muted"
+                  >
+                    Size guide
+                  </button>
+                )}
               </div>
 
               <div className="mt-3 flex flex-wrap gap-2">
@@ -187,9 +218,12 @@ export default function ProductDetail({ product }: { product: Product }) {
             </div>
           )}
 
-          <button type="button" onClick={handleAdd} className="btn btn-solid mt-8 w-full">
-            Add to bag
-          </button>
+          <div ref={addButtonRef} className="mt-8 flex gap-2">
+            <button type="button" onClick={handleAdd} className="btn btn-solid flex-1">
+              Add to bag
+            </button>
+            <WishlistButton productId={product.id} productName={product.name} variant="inline" />
+          </div>
 
           <p className="label-sm text-muted mt-4 flex items-start gap-2">
             <Truck className="mt-0.5 size-4 shrink-0" strokeWidth={1.25} />
@@ -230,6 +264,36 @@ export default function ProductDetail({ product }: { product: Product }) {
           </div>
         </div>
       </div>
+
+      {/* Sticky mobile purchase bar */}
+      <div
+        className={cn(
+          "border-line bg-paper/95 ease-out-soft fixed inset-x-0 bottom-0 z-40 border-t backdrop-blur-sm transition-transform duration-500 lg:hidden",
+          showStickyBar ? "translate-y-0" : "translate-y-full",
+        )}
+      >
+        <div className="gutter flex items-center gap-4 py-3">
+          <div className="min-w-0 flex-1">
+            <p className="label truncate">{product.name}</p>
+            <p className="label-sm text-muted mt-0.5 tabular-nums">
+              {size ? `Size ${size} · ` : ""}
+              {formatPrice(product.priceCents)}
+            </p>
+          </div>
+
+          <button type="button" onClick={handleAdd} className="btn btn-solid px-6 py-3.5">
+            Add
+          </button>
+        </div>
+      </div>
+
+      {sizeGuide && (
+        <SizeGuideDrawer
+          open={sizeGuideOpen}
+          onClose={() => setSizeGuideOpen(false)}
+          table={sizeGuide}
+        />
+      )}
     </div>
   );
 }
