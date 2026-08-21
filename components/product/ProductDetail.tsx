@@ -1,8 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Minus, Plus, Star, Truck } from "lucide-react";
 import { useCart } from "@/store/cart";
 import { formatPrice } from "@/lib/money";
@@ -10,6 +9,7 @@ import { deliveryOptions, estimateDelivery, formatDeliveryDate } from "@/lib/del
 import { cn } from "@/lib/utils";
 import WishlistButton from "./WishlistButton";
 import SizeGuideDrawer from "./SizeGuideDrawer";
+import ProductGallery from "./ProductGallery";
 import { tableForSizes } from "@/lib/sizeGuide";
 import type { Product } from "@/lib/types";
 
@@ -21,22 +21,13 @@ export default function ProductDetail({ product }: { product: Product }) {
   const [showSizeError, setShowSizeError] = useState(false);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
 
-  // The sticky mobile bar appears once the real add-to-bag button scrolls away.
   const addButtonRef = useRef<HTMLDivElement>(null);
   const [showStickyBar, setShowStickyBar] = useState(false);
 
   const color = product.colors[colorIndex];
   const onSale = typeof product.compareAtCents === "number";
-  // Null for sock packs and homeware, where a body-measurement chart says nothing.
   const sizeGuide = tableForSizes(product.sizes);
 
-  // The chosen colourway leads; the rest of the range follows it down the page.
-  const gallery = useMemo(
-    () => [color, ...product.colors.filter((variant) => variant.name !== color.name)],
-    [color, product.colors],
-  );
-
-  // Resolved after mount: the page is prerendered, so "today" is only known on the client.
   const [arrival, setArrival] = useState<string | null>(null);
   useEffect(() => {
     setArrival(formatDeliveryDate(estimateDelivery(deliveryOptions[0])));
@@ -57,8 +48,6 @@ export default function ProductDetail({ product }: { product: Product }) {
   const handleAdd = () => {
     if (size === null) {
       setShowSizeError(true);
-      // Scrolling the picker back into view is the only useful response on mobile,
-      // where the request came from the sticky bar rather than the form itself.
       addButtonRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
@@ -67,32 +56,10 @@ export default function ProductDetail({ product }: { product: Product }) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12">
-      {/* Gallery */}
       <div className="lg:col-span-7">
-        <div className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto lg:grid lg:grid-cols-2 lg:gap-px lg:overflow-visible">
-          {gallery.map((variant, index) => (
-            <div
-              key={variant.name}
-              className={cn(
-                "bg-sand relative aspect-3/4 w-full shrink-0 snap-start",
-                // A lone image spans the full width rather than leaving a gap.
-                gallery.length === 1 && "lg:col-span-2 lg:aspect-4/3",
-              )}
-            >
-              <Image
-                src={variant.image}
-                alt={`${product.name} in ${variant.name}`}
-                fill
-                priority={index === 0}
-                sizes="(max-width: 1024px) 100vw, 30vw"
-                className="object-cover object-top"
-              />
-            </div>
-          ))}
-        </div>
+        <ProductGallery product={product} index={colorIndex} onChange={setColorIndex} />
       </div>
 
-      {/* Detail column */}
       <div className="lg:col-span-5">
         <div className="px-gutter sticky top-16 py-10 lg:top-20 lg:px-14 lg:py-16">
           <nav aria-label="Breadcrumb" className="label-sm text-muted">
@@ -143,7 +110,6 @@ export default function ProductDetail({ product }: { product: Product }) {
 
           <p className="text-ink-soft mt-7">{product.description}</p>
 
-          {/* Colour */}
           <div className="mt-9">
             <p className="label-sm">
               Colour — <span className="text-muted">{color.name}</span>
@@ -172,7 +138,6 @@ export default function ProductDetail({ product }: { product: Product }) {
             </div>
           </div>
 
-          {/* Size */}
           {product.sizes.length > 0 && (
             <div className="mt-8">
               <div className="flex items-baseline justify-between">
@@ -265,7 +230,6 @@ export default function ProductDetail({ product }: { product: Product }) {
         </div>
       </div>
 
-      {/* Sticky mobile purchase bar */}
       <div
         className={cn(
           "border-line bg-paper/95 ease-out-soft fixed inset-x-0 bottom-0 z-40 border-t backdrop-blur-sm transition-transform duration-500 lg:hidden",
