@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, Search, X } from "lucide-react";
+import { Heart, Menu, Search, X } from "lucide-react";
 import { categories } from "@/lib/catalog";
 import { useCart, selectCount } from "@/store/cart";
+import { useWishlist } from "@/store/wishlist";
 import { cn } from "@/lib/utils";
 import SearchPanel from "./SearchPanel";
 import MobileMenu from "./MobileMenu";
@@ -20,6 +21,10 @@ export default function Header() {
   const hydrated = useCart((state) => state.hydrated);
   const openDrawer = useCart((state) => state.openDrawer);
   const count = selectCount(items);
+
+  const savedIds = useWishlist((state) => state.ids);
+  const wishlistHydrated = useWishlist((state) => state.hydrated);
+  const savedCount = wishlistHydrated ? savedIds.length : 0;
 
   const isHome = pathname === "/";
   // On the home page the header floats over the light hero — no rule, no fill —
@@ -68,6 +73,13 @@ export default function Header() {
             >
               New In
             </Link>
+            <Link
+              href="/shop/sale"
+              data-active={pathname === "/shop/sale"}
+              className="label link-underline text-sale"
+            >
+              Sale
+            </Link>
           </nav>
 
           <button
@@ -114,6 +126,19 @@ export default function Header() {
 
             <Link href="/orders" className="label link-underline hidden lg:inline-block">
               Orders
+            </Link>
+
+            <Link
+              href="/wishlist"
+              aria-label="Wishlist"
+              className="link-underline relative hidden lg:inline-flex"
+            >
+              <Heart className={cn("size-4", savedCount > 0 && "fill-ink")} strokeWidth={1.25} />
+              {savedCount > 0 && (
+                <span className="label-sm absolute -top-2 -right-2.5 tabular-nums">
+                  {savedCount}
+                </span>
+              )}
             </Link>
 
             <button

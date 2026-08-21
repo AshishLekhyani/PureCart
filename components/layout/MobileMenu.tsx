@@ -24,7 +24,7 @@ export default function MobileMenu({ open, onClose }: { open: boolean; onClose: 
       aria-modal="true"
       aria-hidden={!open}
       className={cn(
-        "bg-paper ease-out-soft fixed inset-0 z-[60] transition-transform duration-500 lg:hidden",
+        "bg-paper ease-out-soft fixed inset-0 z-60 transition-transform duration-500 lg:hidden",
         open ? "translate-x-0" : "pointer-events-none -translate-x-full",
       )}
     >
@@ -53,6 +53,9 @@ export default function MobileMenu({ open, onClose }: { open: boolean; onClose: 
       </nav>
 
       <div className="gutter flex flex-col gap-4">
+        <Link href="/wishlist" onClick={onClose} className="label link-underline self-start">
+          Wishlist
+        </Link>
         <Link href="/orders" onClick={onClose} className="label link-underline self-start">
           Orders
         </Link>

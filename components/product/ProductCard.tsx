@@ -6,6 +6,7 @@ import { useState } from "react";
 import { formatPrice } from "@/lib/money";
 import { useCart } from "@/store/cart";
 import { cn } from "@/lib/utils";
+import WishlistButton from "./WishlistButton";
 import type { Product } from "@/lib/types";
 
 type Props = {
@@ -42,6 +43,12 @@ export default function ProductCard({ product, priority = false, columns = 4 }: 
 
   return (
     <article className="group relative">
+      <WishlistButton
+        productId={product.id}
+        productName={product.name}
+        className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100 max-lg:opacity-100"
+      />
+
       <Link href={`/product/${product.slug}`} className="block" aria-label={product.name}>
         <div className="bg-sand relative aspect-3/4 overflow-hidden">
           <Image

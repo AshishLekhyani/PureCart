@@ -61,6 +61,11 @@ export default function Footer() {
                 New In
               </Link>
             </li>
+            <li>
+              <Link href="/wishlist" className="link-underline">
+                Wishlist
+              </Link>
+            </li>
           </ul>
         </div>
 

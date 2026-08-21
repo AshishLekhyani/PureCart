@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import ProductDetail from "@/components/product/ProductDetail";
 import ProductRail from "@/components/product/ProductRail";
+import RecentlyViewed from "@/components/product/RecentlyViewed";
+import { BreadcrumbJsonLd, ProductJsonLd } from "@/components/JsonLd";
 import { getProductBySlug, getRelated, products } from "@/lib/catalog";
 import { formatPrice } from "@/lib/money";
 
@@ -34,8 +36,18 @@ export default async function ProductPage({ params }: Params) {
 
   return (
     <>
+      <ProductJsonLd product={product} />
+      <BreadcrumbJsonLd
+        trail={[
+          { name: "Home", path: "/" },
+          { name: product.category, path: `/shop/${product.category}` },
+          { name: product.name, path: `/product/${product.slug}` },
+        ]}
+      />
+
       <ProductDetail product={product} />
       <ProductRail title="You may also like" products={getRelated(product, 8)} />
+      <RecentlyViewed currentProductId={product.id} />
     </>
   );
 }
