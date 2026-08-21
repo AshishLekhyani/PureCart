@@ -16,38 +16,53 @@ export default function HomePage() {
       <Hero />
       <Marquee />
 
-      <ProductRail
-        title="New In"
-        products={[...newIn, ...bestsellers].slice(0, 8)}
-        href="/shop/new"
-      />
+      <div className="reveal-on-scroll">
+        <ProductRail
+          title="New In"
+          products={[...newIn, ...bestsellers].slice(0, 8)}
+          href="/shop/new"
+        />
+      </div>
 
-      <EditorialSplit
-        eyebrow="The edit"
-        title="Everyday Knitwear"
-        body="Brushed fleece and heavy cotton jersey, cut roomy through the body. The layer that does most of the work between September and March."
-        href="/shop/women"
-        cta="Shop the edit"
-        image="/products/variations/plain-hooded-fleece-sweatshirt-yellow.jpg"
-        imageAlt="Hooded fleece sweatshirt in butter yellow"
-      />
+      <div className="reveal-on-scroll">
+        <EditorialSplit
+          eyebrow="The edit"
+          title="Everyday Knitwear"
+          body="Brushed fleece and heavy cotton jersey, cut roomy through the body. The layer that does most of the work between September and March."
+          href="/shop/women"
+          cta="Shop the edit"
+          image="/products/variations/plain-hooded-fleece-sweatshirt-yellow.jpg"
+          imageAlt="Hooded fleece sweatshirt in butter yellow"
+        />
+      </div>
 
-      <CategoryTiles />
+      <div className="reveal-on-scroll">
+        <CategoryTiles />
+      </div>
 
       <Campaign />
 
-      <ProductRail title="Most Wanted" products={bestsellers} href="/shop/women" cta="Shop women" />
+      <div className="reveal-on-scroll">
+        <ProductRail
+          title="Most Wanted"
+          products={bestsellers}
+          href="/shop/women"
+          cta="Shop women"
+        />
+      </div>
 
-      <EditorialSplit
-        eyebrow="Home"
-        title="Plain Materials"
-        body="Zero-twist cotton, stonewashed linen blends, and glazed stoneware. The same restraint we apply to clothes, applied to the rooms you wear them in."
-        href="/shop/home"
-        cta="Shop home"
-        image="/products/cotton-bath-towels-teal.webp"
-        imageAlt="Combed cotton bath towels in teal"
-        reverse
-      />
+      <div className="reveal-on-scroll">
+        <EditorialSplit
+          eyebrow="Home"
+          title="Plain Materials"
+          body="Zero-twist cotton, stonewashed linen blends, and glazed stoneware. The same restraint we apply to clothes, applied to the rooms you wear them in."
+          href="/shop/home"
+          cta="Shop home"
+          image="/products/cotton-bath-towels-teal.webp"
+          imageAlt="Combed cotton bath towels in teal"
+          reverse
+        />
+      </div>
 
       <ServiceRow />
     </>
