@@ -1,67 +1,112 @@
-# PureCart 🛒
+# PureCart
 
-A lightweight, framework-free e-commerce platform built entirely with pure Vanilla JavaScript. This project focuses on modular architecture, advanced asynchronous data fetching patterns, and robust state management without the overhead of external libraries.
+A ready-to-wear storefront built with Next.js — women, men, accessories, and home. The design
+follows the editorial-minimal register that Zara, COS, and H&M use: high-contrast serif display
+type, tiny wide-tracked uppercase labels, hairline rules instead of shadows, square corners, and
+photography carrying the page.
 
-![PureCart Logo](images/purecart-logo.svg)
-
-## 🌟 Key Features
-
-*   **Dynamic Product Catalog:** Asynchronous product fetching (`async/await` & `Fetch API`) from a RESTful backend.
-*   **Interactive Shopping Cart:** Real-time cart quantity updates, dynamic pricing calculation, and local storage persistence.
-*   **Checkout & Order Summary:** Interactive review process with multiple shipping speed options and dynamic order total recalculation.
-*   **Order Tracking:** Visual progress bars calculating shipment status using real-world timestamps and the `dayjs` library.
-*   **Modular Architecture:** Clean separation of concerns with dedicated data models (`cart.js`, `products.js`, `orders.js`) driving the UI rendering logic.
-*   **Automated Testing:** Integrated Jasmine testing suite for business logic (currency formatting, cart state).
-
-## 🚀 Tech Stack
-
-*   **Frontend Vanilla:** HTML5, CSS3, modern ES6+ JavaScript.
-*   **Architecture:** Component-based rendering patterns, strict separation of data and UI (MVC pattern inspired).
-*   **External Libraries:** `dayjs` (for date manipulation).
-*   **Testing:** Jasmine.
-
-## 📁 Project Structure
-
-```text
-PureCart/
-├── data/          # Application state & data fetching (cart, products, orders, deliveryOptions)
-├── scripts/       # UI rendering logic (purecart, checkout, orders, tracking)
-│   └── checkout/  # Component-specific rendering (orderSummary, paymentSummary)
-├── styles/        # CSS organized by page and shared utility classes
-├── tests/         # Jasmine unit and integration tests
-├── images/        # Brand assets, product imagery, and distinct SVGs
-└── index.html     # Main storefront entry point
+```bash
+npm install
+npm run dev      # http://localhost:3000
 ```
 
-## 🛠️ Installation & Setup
+## Features
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/yourusername/PureCart.git
-    cd PureCart
-    ```
+**Storefront**
 
-2.  **Run Locally:**
-    Since this is a vanilla HTML/JS project, you do not need Node.js or `npm install`. 
-    You can use the **Live Server** extension in VS Code:
-    *   Open the `PureCart` folder in VS Code.
-    *   Right-click `index.html` and select **"Open with Live Server"**.
+- Editorial home page — staggered hero, scrolling marquee, category tiles, editorial splits, and
+  horizontally scrolling product rails.
+- Category listing with live filtering (line, size, reduced), four sort orders, and a two-up /
+  four-up grid density switch.
+- Product detail with colourway switching, size selection, an accordion spec panel, and a
+  business-day delivery estimate.
+- Product cards with a hover image swap between colourways, swatch previews, and hover-to-add size
+  chips.
+- Instant search panel in the header plus a full `/search` results page.
 
-3.  **Run Tests:**
-    Open `tests/tests.html` in your browser to execute the Jasmine test suite and verify core functionality.
+**Bag, checkout, orders**
 
-## 📡 Data Source & API
+- Slide-out bag drawer with a free-shipping progress rail, quantity stepper, and per-line removal.
+- Full bag page with per-line delivery speed selection.
+- Checkout with field validation and a live order summary. No payment is taken — it is a demo.
+- Order history and a per-order tracking page with a Preparing → Shipped → Delivered progress rail
+  computed from real timestamps.
 
-The product catalog is fetched asynchronously from a dedicated external API provided by [SuperSimpleDev](https://supersimplebackend.dev/).
+**Craft**
 
-> **Note:** For offline reference or local development without internet access, a complete replica of the API's product data is preserved locally in the `data/products.json` file.
+- Bag and order history persist to `localStorage` and are hydration-safe, so nothing flashes or
+  mismatches on first paint.
+- 38 static product pages plus category pages prerendered at build time.
+- Keyboard-navigable throughout: skip link, focus rings, `Escape` closes every overlay,
+  `aria-pressed` on every toggle, and a `prefers-reduced-motion` bail-out.
+- 57 unit tests over the money, delivery, cart, and catalogue logic.
 
-**Local Data Instantiation:** While the raw JSON data is fetched from the API, it is parsed and instantiated into **Object-Oriented JavaScript Classes** (`Product`, `Clothing`, `Appliance`) before being rendered into the UI. This provides a clean interface for formatting prices and managing product-specific logic.
+## Tech
 
-**Local Cart Logic:** While product data comes from an external API, the **Shopping Cart logic is handled entirely locally**. All cart operations (adding/removing items, calculating quantities, changing delivery speeds) are executed via client-side JavaScript in `cart.js` and persisted using the browser's `localStorage`. This hybrid approach ensures ultra-fast cart interactions without network latency.
+| | |
+| --- | --- |
+| Framework | Next.js 16 (App Router, React 19, Turbopack) |
+| Language | TypeScript, strict |
+| Styling | Tailwind CSS v4, tokens defined in `app/globals.css` |
+| State | Zustand with `persist` |
+| Icons | lucide-react |
+| Type | Bodoni Moda (display) + Inter (UI), via `next/font` |
+| Testing | Vitest |
 
-## 🧠 Architectural Decisions
+## Structure
 
-*   **Fetch vs XHR:** The project was fully migrated to use the modern `fetch` API wrapping calls in `async/await` for cleaner asynchronous data flow, eliminating legacy `XMLHttpRequest` callbacks.
-*   **Data Driven UI:** The interface strictly reacts to changes in the data layer. For example, modifying `cart.js` guarantees the UI updates linearly when re-rendered.
-*   **No Frameworks:** Built intentionally without React or Vue to master the fundamentals of DOM manipulation, event delegation, and module bundling natively in the browser.
+```text
+app/               Routes (App Router)
+  shop/[category]/ Category listing — plus the `new` merchandising view
+  product/[slug]/  Product detail
+  cart/ checkout/  Bag and checkout
+  orders/          Order history and per-order tracking
+  search/          Search results
+  globals.css      Design tokens and component classes
+components/
+  layout/          Header, footer, search panel, mobile menu
+  product/         Card, grid, rail, category view, detail
+  cart/            Drawer, bag view, quantity stepper
+  checkout/        Checkout form and summary
+  orders/          Order list and tracking
+  home/            Hero, marquee, category tiles, editorial splits, campaign
+lib/               Catalogue, money, delivery, types, helpers
+store/             Zustand stores (cart, orders)
+tests/             Vitest suites
+public/products/   Product photography
+```
+
+## Design system
+
+Everything is built from a handful of tokens in `app/globals.css`:
+
+- **Colour** — `ink` `#0E0E0E`, `paper` `#FFFFFF`, `sand` `#F5F2ED`, `line` `#E3DFD8`, `muted`
+  `#78746E`, and one accent, `sale` `#A8332B`.
+- **Type** — Bodoni Moda for display, Inter for UI. The `.label` and `.label-sm` classes carry most
+  of the interface: uppercase, 11px/10px, `0.16em`–`0.18em` tracking.
+- **Depth** — none. No border radius and no shadows anywhere; separation comes from hairlines,
+  whitespace, and the photography.
+- **Motion** — one easing curve (`--ease-out-soft`), 300–700ms, disabled under
+  `prefers-reduced-motion`.
+
+## Scripts
+
+```bash
+npm run dev     # dev server
+npm run build   # production build
+npm start       # serve the production build
+npm test        # run the Vitest suite
+```
+
+## Notes
+
+This is a portfolio build. No orders are placed, no payments are taken, and no data leaves the
+browser — the bag and order history live in `localStorage`, so they do not follow you to another
+device.
+
+Product photography and the underlying catalogue data originate from the
+[SuperSimpleDev](https://supersimplebackend.dev/) sample dataset; the copy, pricing, colourways,
+merchandising, and design are original to this project.
+
+The pre-2.0 vanilla HTML/CSS/JS version of PureCart is preserved in git history at commit
+`8ae7885`.
