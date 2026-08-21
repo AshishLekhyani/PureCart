@@ -8,19 +8,37 @@ const SHOE = ["36", "37", "38", "39", "40", "41", "42", "43"];
 const WAIST = ["28", "30", "32", "34", "36", "38"];
 
 export const products: Product[] = [
-  /* ------------------------------- WOMEN ------------------------------- */
   {
     id: "b0f17cc5-8b40-4ca5-9142-b61fe3d98c85",
     slug: "stretch-popover-hoodie",
     name: "Stretch Popover Hoodie",
     category: "women",
     line: "Sweatshirts",
+    shot: "model",
     priceCents: 3990,
     compareAtCents: 4990,
     colors: [
-      { name: "Black", hex: "#141414", image: `${V}/women-stretch-popover-hoodie-black.jpg` },
-      { name: "Indigo", hex: "#3C4E6B", image: `${V}/women-stretch-popover-hoodie-blue.jpg` },
-      { name: "Grey Marl", hex: "#9A9A97", image: `${V}/women-stretch-popover-hoodie-gray.jpg` },
+      {
+        name: "Black",
+        hex: "#141414",
+        image: `${V}/women-stretch-popover-hoodie-black.jpg`,
+        width: 369,
+        height: 553,
+      },
+      {
+        name: "Indigo",
+        hex: "#3C4E6B",
+        image: `${V}/women-stretch-popover-hoodie-blue.jpg`,
+        width: 400,
+        height: 879,
+      },
+      {
+        name: "Grey Marl",
+        hex: "#9A9A97",
+        image: `${V}/women-stretch-popover-hoodie-gray.jpg`,
+        width: 398,
+        height: 879,
+      },
     ],
     sizes: APPAREL,
     description:
@@ -41,17 +59,22 @@ export const products: Product[] = [
     name: "French Terry Jogger",
     category: "women",
     line: "Trousers",
+    shot: "model",
     priceCents: 4590,
     colors: [
       {
         name: "Camo",
         hex: "linear-gradient(135deg,#6B6F47 0%,#4A4E36 100%)",
         image: `${V}/women-french-terry-fleece-jogger-camo.jpg`,
+        width: 363,
+        height: 879,
       },
       {
         name: "Grey Marl",
         hex: "#A3A3A0",
         image: `${V}/women-french-terry-fleece-jogger-gray.jpg`,
+        width: 388,
+        height: 879,
       },
     ],
     sizes: APPAREL,
@@ -73,9 +96,16 @@ export const products: Product[] = [
     name: "Sheer Chiffon Cover-Up",
     category: "women",
     line: "Beachwear",
+    shot: "model",
     priceCents: 3590,
     colors: [
-      { name: "Black", hex: "#131313", image: `${P}/women-chiffon-beachwear-coverup-black.jpg` },
+      {
+        name: "Black",
+        hex: "#131313",
+        image: `${P}/women-chiffon-beachwear-coverup-black.jpg`,
+        width: 487,
+        height: 733,
+      },
     ],
     sizes: ["S", "M", "L"],
     description:
@@ -91,14 +121,29 @@ export const products: Product[] = [
     name: "Knit Ballet Flat",
     category: "women",
     line: "Shoes",
+    shot: "still",
     priceCents: 4990,
     colors: [
-      { name: "Black", hex: "#151515", image: `${V}/women-knit-ballet-flat-black.jpg` },
-      { name: "Stone", hex: "#B9B4AC", image: `${V}/women-knit-ballet-flat-gray.jpg` },
+      {
+        name: "Black",
+        hex: "#151515",
+        image: `${V}/women-knit-ballet-flat-black.jpg`,
+        width: 695,
+        height: 331,
+      },
+      {
+        name: "Stone",
+        hex: "#B9B4AC",
+        image: `${V}/women-knit-ballet-flat-gray.jpg`,
+        width: 695,
+        height: 321,
+      },
       {
         name: "Leopard",
         hex: "linear-gradient(135deg,#C8A166 0%,#4A3521 100%)",
         image: `${V}/women-knit-ballet-flat-leopard.jpg`,
+        width: 695,
+        height: 350,
       },
     ],
     sizes: SHOE,
@@ -115,8 +160,17 @@ export const products: Product[] = [
     name: "Flat Slide Sandal",
     category: "women",
     line: "Shoes",
+    shot: "still",
     priceCents: 2990,
-    colors: [{ name: "Tan", hex: "#B98A5E", image: `${P}/women-beach-sandals.jpg` }],
+    colors: [
+      {
+        name: "Tan",
+        hex: "#B98A5E",
+        image: `${P}/women-beach-sandals.jpg`,
+        width: 695,
+        height: 339,
+      },
+    ],
     sizes: SHOE,
     description:
       "A pared-back slide with a moulded footbed and a single wide strap. Quick-drying and built for sand, tile, and everything in between.",
@@ -131,10 +185,23 @@ export const products: Product[] = [
     name: "Knit Runner Sneaker",
     category: "women",
     line: "Shoes",
+    shot: "still",
     priceCents: 5990,
     colors: [
-      { name: "Blush", hex: "#D9A3A8", image: `${P}/knit-athletic-sneakers-pink.webp` },
-      { name: "Grey", hex: "#8E8E8B", image: `${P}/knit-athletic-sneakers-gray.jpg` },
+      {
+        name: "Blush",
+        hex: "#D9A3A8",
+        image: `${P}/knit-athletic-sneakers-pink.webp`,
+        width: 640,
+        height: 345,
+      },
+      {
+        name: "Grey",
+        hex: "#8E8E8B",
+        image: `${P}/knit-athletic-sneakers-gray.jpg`,
+        width: 695,
+        height: 366,
+      },
     ],
     sizes: SHOE,
     description:
@@ -150,10 +217,23 @@ export const products: Product[] = [
     name: "Hooded Fleece Sweatshirt",
     category: "women",
     line: "Sweatshirts",
+    shot: "still",
     priceCents: 3990,
     colors: [
-      { name: "Butter", hex: "#E4C86A", image: `${V}/plain-hooded-fleece-sweatshirt-yellow.jpg` },
-      { name: "Teal", hex: "#3F7F7D", image: `${V}/plain-hooded-fleece-sweatshirt-teal.jpg` },
+      {
+        name: "Butter",
+        hex: "#E4C86A",
+        image: `${V}/plain-hooded-fleece-sweatshirt-yellow.jpg`,
+        width: 679,
+        height: 833,
+      },
+      {
+        name: "Teal",
+        hex: "#3F7F7D",
+        image: `${V}/plain-hooded-fleece-sweatshirt-teal.jpg`,
+        width: 671,
+        height: 879,
+      },
     ],
     sizes: APPAREL,
     description:
@@ -164,18 +244,36 @@ export const products: Product[] = [
     keywords: ["hoodie", "sweatshirt", "fleece", "oversized", "unisex"],
   },
 
-  /* -------------------------------- MEN -------------------------------- */
   {
     id: "8b5a2ee1-6055-422a-a666-b34ba28b76d4",
     slug: "pique-polo-shirt",
     name: "Piqué Polo Shirt",
     category: "men",
     line: "T-Shirts",
+    shot: "still",
     priceCents: 2990,
     colors: [
-      { name: "Sky", hex: "#7FA8CF", image: `${V}/men-golf-polo-t-shirt-blue.jpg` },
-      { name: "Black", hex: "#161616", image: `${V}/men-golf-polo-t-shirt-black.jpg` },
-      { name: "Red", hex: "#A5342E", image: `${V}/men-golf-polo-t-shirt-red.jpg` },
+      {
+        name: "Sky",
+        hex: "#7FA8CF",
+        image: `${V}/men-golf-polo-t-shirt-blue.jpg`,
+        width: 679,
+        height: 728,
+      },
+      {
+        name: "Black",
+        hex: "#161616",
+        image: `${V}/men-golf-polo-t-shirt-black.jpg`,
+        width: 679,
+        height: 745,
+      },
+      {
+        name: "Red",
+        hex: "#A5342E",
+        image: `${V}/men-golf-polo-t-shirt-red.jpg`,
+        width: 679,
+        height: 745,
+      },
     ],
     sizes: APPAREL,
     description:
@@ -196,11 +294,30 @@ export const products: Product[] = [
     name: "Cotton T-Shirt Two-Pack",
     category: "men",
     line: "T-Shirts",
+    shot: "still",
     priceCents: 1990,
     colors: [
-      { name: "Teal", hex: "#3E7C7B", image: `${V}/adults-plain-cotton-tshirt-2-pack-teal.jpg` },
-      { name: "Black", hex: "#141414", image: `${V}/adults-plain-cotton-tshirt-2-pack-black.jpg` },
-      { name: "Red", hex: "#9E3128", image: `${V}/adults-plain-cotton-tshirt-2-pack-red.jpg` },
+      {
+        name: "Teal",
+        hex: "#3E7C7B",
+        image: `${V}/adults-plain-cotton-tshirt-2-pack-teal.jpg`,
+        width: 679,
+        height: 717,
+      },
+      {
+        name: "Black",
+        hex: "#141414",
+        image: `${V}/adults-plain-cotton-tshirt-2-pack-black.jpg`,
+        width: 679,
+        height: 768,
+      },
+      {
+        name: "Red",
+        hex: "#9E3128",
+        image: `${V}/adults-plain-cotton-tshirt-2-pack-red.jpg`,
+        width: 679,
+        height: 790,
+      },
     ],
     sizes: APPAREL,
     description:
@@ -216,11 +333,30 @@ export const products: Product[] = [
     name: "Slim Fit Chino",
     category: "men",
     line: "Trousers",
+    shot: "model",
     priceCents: 4590,
     colors: [
-      { name: "Sand", hex: "#C9B294", image: `${V}/men-chino-pants-beige.jpg` },
-      { name: "Black", hex: "#171717", image: `${V}/men-chino-pants-black.jpg` },
-      { name: "Olive", hex: "#5C6247", image: `${V}/men-chino-pants-green.jpg` },
+      {
+        name: "Sand",
+        hex: "#C9B294",
+        image: `${V}/men-chino-pants-beige.jpg`,
+        width: 428,
+        height: 879,
+      },
+      {
+        name: "Black",
+        hex: "#171717",
+        image: `${V}/men-chino-pants-black.jpg`,
+        width: 338,
+        height: 879,
+      },
+      {
+        name: "Olive",
+        hex: "#5C6247",
+        image: `${V}/men-chino-pants-green.jpg`,
+        width: 418,
+        height: 879,
+      },
     ],
     sizes: WAIST,
     description:
@@ -241,10 +377,23 @@ export const products: Product[] = [
     name: "Zip-Through Fleece Hoodie",
     category: "men",
     line: "Sweatshirts",
+    shot: "still",
     priceCents: 4990,
     colors: [
-      { name: "Rust", hex: "#8E3B2E", image: `${V}/men-cozy-fleece-zip-up-hoodie-red.jpg` },
-      { name: "Black", hex: "#151515", image: `${V}/men-cozy-fleece-zip-up-hoodie-black.jpg` },
+      {
+        name: "Rust",
+        hex: "#8E3B2E",
+        image: `${V}/men-cozy-fleece-zip-up-hoodie-red.jpg`,
+        width: 679,
+        height: 777,
+      },
+      {
+        name: "Black",
+        hex: "#151515",
+        image: `${V}/men-cozy-fleece-zip-up-hoodie-black.jpg`,
+        width: 679,
+        height: 691,
+      },
     ],
     sizes: APPAREL,
     description:
@@ -265,12 +414,31 @@ export const products: Product[] = [
     name: "Slim Fit Short",
     category: "men",
     line: "Shorts",
+    shot: "model",
     priceCents: 2590,
     compareAtCents: 3590,
     colors: [
-      { name: "Grey", hex: "#8C8C89", image: `${V}/men-slim-fit-summer-shorts-gray.jpg` },
-      { name: "Sand", hex: "#CBB79A", image: `${V}/men-slim-fit-summer-shorts-beige.jpg` },
-      { name: "Black", hex: "#161616", image: `${V}/men-slim-fit-summer-shorts-black.jpg` },
+      {
+        name: "Grey",
+        hex: "#8C8C89",
+        image: `${V}/men-slim-fit-summer-shorts-gray.jpg`,
+        width: 442,
+        height: 879,
+      },
+      {
+        name: "Sand",
+        hex: "#CBB79A",
+        image: `${V}/men-slim-fit-summer-shorts-beige.jpg`,
+        width: 443,
+        height: 879,
+      },
+      {
+        name: "Black",
+        hex: "#161616",
+        image: `${V}/men-slim-fit-summer-shorts-black.jpg`,
+        width: 391,
+        height: 879,
+      },
     ],
     sizes: WAIST,
     description:
@@ -291,10 +459,23 @@ export const products: Product[] = [
     name: "Mesh Trainer",
     category: "men",
     line: "Shoes",
+    shot: "still",
     priceCents: 6990,
     colors: [
-      { name: "Green", hex: "#4F6B4A", image: `${V}/men-athletic-shoes-green.jpg` },
-      { name: "Black", hex: "#171717", image: `${V}/men-athletic-shoes-black.jpg` },
+      {
+        name: "Green",
+        hex: "#4F6B4A",
+        image: `${V}/men-athletic-shoes-green.jpg`,
+        width: 695,
+        height: 428,
+      },
+      {
+        name: "Black",
+        hex: "#171717",
+        image: `${V}/men-athletic-shoes-black.jpg`,
+        width: 695,
+        height: 415,
+      },
     ],
     sizes: ["40", "41", "42", "43", "44", "45"],
     description:
@@ -305,17 +486,29 @@ export const products: Product[] = [
     keywords: ["shoes", "trainers", "sneakers", "men", "athletic"],
   },
 
-  /* ---------------------------- ACCESSORIES ---------------------------- */
   {
     id: "aad29d11-ea98-41ee-9285-b916638cac4a",
     slug: "round-metal-sunglasses",
     name: "Round Metal Sunglasses",
     category: "accessories",
     line: "Eyewear",
+    shot: "still",
     priceCents: 2590,
     colors: [
-      { name: "Black", hex: "#141414", image: `${V}/round-sunglasses-black.jpg` },
-      { name: "Gold", hex: "#C0A059", image: `${V}/round-sunglasses-gold.jpg` },
+      {
+        name: "Black",
+        hex: "#141414",
+        image: `${V}/round-sunglasses-black.jpg`,
+        width: 679,
+        height: 434,
+      },
+      {
+        name: "Gold",
+        hex: "#C0A059",
+        image: `${V}/round-sunglasses-gold.jpg`,
+        width: 679,
+        height: 408,
+      },
     ],
     sizes: [],
     description:
@@ -331,10 +524,23 @@ export const products: Product[] = [
     name: "Navigator Sunglasses",
     category: "accessories",
     line: "Eyewear",
+    shot: "still",
     priceCents: 2290,
     colors: [
-      { name: "Tortoise", hex: "#7A5330", image: `${V}/men-navigator-sunglasses-brown.jpg` },
-      { name: "Silver", hex: "#B4B7BA", image: `${V}/men-navigator-sunglasses-silver.jpg` },
+      {
+        name: "Tortoise",
+        hex: "#7A5330",
+        image: `${V}/men-navigator-sunglasses-brown.jpg`,
+        width: 679,
+        height: 429,
+      },
+      {
+        name: "Silver",
+        hex: "#B4B7BA",
+        image: `${V}/men-navigator-sunglasses-silver.jpg`,
+        width: 679,
+        height: 431,
+      },
     ],
     sizes: [],
     description:
@@ -350,12 +556,15 @@ export const products: Product[] = [
     name: "Twisted Wire Drop Earring",
     category: "accessories",
     line: "Jewellery",
+    shot: "still",
     priceCents: 2400,
     colors: [
       {
         name: "Gold",
         hex: "#C6A961",
         image: `${P}/double-elongated-twist-french-wire-earrings.webp`,
+        width: 263,
+        height: 640,
       },
     ],
     sizes: [],
@@ -372,8 +581,17 @@ export const products: Product[] = [
     name: "Flower Stud Earring",
     category: "accessories",
     line: "Jewellery",
+    shot: "still",
     priceCents: 1890,
-    colors: [{ name: "Sky", hex: "#9DBBD6", image: `${P}/sky-flower-stud-earrings.webp` }],
+    colors: [
+      {
+        name: "Sky",
+        hex: "#9DBBD6",
+        image: `${P}/sky-flower-stud-earrings.webp`,
+        width: 640,
+        height: 303,
+      },
+    ],
     sizes: [],
     description:
       "A small enamel flower on a sterling post. Quiet enough for every day, and it will not fight with anything else you are wearing.",
@@ -388,8 +606,11 @@ export const products: Product[] = [
     name: "Woven Straw Hat",
     category: "accessories",
     line: "Hats",
+    shot: "still",
     priceCents: 2990,
-    colors: [{ name: "Natural", hex: "#D8C398", image: `${P}/straw-sunhat.webp` }],
+    colors: [
+      { name: "Natural", hex: "#D8C398", image: `${P}/straw-sunhat.webp`, width: 640, height: 332 },
+    ],
     sizes: [],
     description:
       "A wide-brim straw hat with a grosgrain band and an internal drawstring so it stays on in the wind. Folds flat for travel.",
@@ -404,8 +625,17 @@ export const products: Product[] = [
     name: "Chunky Rib Beanie",
     category: "accessories",
     line: "Hats",
+    shot: "still",
     priceCents: 1690,
-    colors: [{ name: "Grey Marl", hex: "#9C9C99", image: `${P}/women-chunky-beanie-gray.webp` }],
+    colors: [
+      {
+        name: "Grey Marl",
+        hex: "#9C9C99",
+        image: `${P}/women-chunky-beanie-gray.webp`,
+        width: 440,
+        height: 640,
+      },
+    ],
     sizes: [],
     description:
       "A deep-turnup beanie in a chunky rib knit. Warm, slightly slouchy, and it holds its shape.",
@@ -420,8 +650,11 @@ export const products: Product[] = [
     name: "Canvas Day Backpack",
     category: "accessories",
     line: "Bags",
+    shot: "still",
     priceCents: 4590,
-    colors: [{ name: "Charcoal", hex: "#3B3D40", image: `${P}/backpack.jpg` }],
+    colors: [
+      { name: "Charcoal", hex: "#3B3D40", image: `${P}/backpack.jpg`, width: 972, height: 1454 },
+    ],
     sizes: [],
     description:
       "A clean-front backpack in a coated canvas, with a padded laptop sleeve and a water-bottle pocket that disappears when empty.",
@@ -436,8 +669,11 @@ export const products: Product[] = [
     name: "Compact Storm Umbrella",
     category: "accessories",
     line: "Bags",
+    shot: "still",
     priceCents: 1990,
-    colors: [{ name: "Black", hex: "#1A1A1A", image: `${P}/umbrella.jpg` }],
+    colors: [
+      { name: "Black", hex: "#1A1A1A", image: `${P}/umbrella.jpg`, width: 1500, height: 1412 },
+    ],
     sizes: [],
     description:
       "A vented double canopy on a fibreglass frame that flips back instead of breaking. Folds down to 28 cm.",
@@ -457,12 +693,15 @@ export const products: Product[] = [
     name: "Ribbed Sport Sock Six-Pack",
     category: "accessories",
     line: "Socks",
+    shot: "still",
     priceCents: 1490,
     colors: [
       {
         name: "Black / Grey",
         hex: "linear-gradient(135deg,#1A1A1A 50%,#9A9A9A 50%)",
         image: `${P}/athletic-cotton-socks-6-pairs.jpg`,
+        width: 679,
+        height: 753,
       },
     ],
     sizes: ["S/M", "L/XL"],
@@ -479,17 +718,29 @@ export const products: Product[] = [
     keywords: ["socks", "basics", "sport", "accessories", "pack"],
   },
 
-  /* -------------------------------- HOME ------------------------------- */
   {
     id: "19c6a64a-5463-4d45-9af8-e41140a4100c",
     slug: "washed-cotton-duvet-set",
     name: "Washed Cotton Duvet Set",
     category: "home",
     line: "Bedroom",
+    shot: "model",
     priceCents: 5990,
     colors: [
-      { name: "Indigo", hex: "#41597E", image: `${V}/duvet-cover-set-blue-twin.jpg` },
-      { name: "Brick", hex: "#8E4438", image: `${V}/duvet-cover-set-red-twin.jpg` },
+      {
+        name: "Indigo",
+        hex: "#41597E",
+        image: `${V}/duvet-cover-set-blue-twin.jpg`,
+        width: 679,
+        height: 679,
+      },
+      {
+        name: "Brick",
+        hex: "#8E4438",
+        image: `${V}/duvet-cover-set-red-twin.jpg`,
+        width: 679,
+        height: 679,
+      },
     ],
     sizes: ["Twin", "Queen"],
     description:
@@ -510,8 +761,17 @@ export const products: Product[] = [
     name: "Combed Cotton Bath Towel",
     category: "home",
     line: "Bathroom",
+    shot: "still",
     priceCents: 2490,
-    colors: [{ name: "Teal", hex: "#3D7A79", image: `${P}/cotton-bath-towels-teal.webp` }],
+    colors: [
+      {
+        name: "Teal",
+        hex: "#3D7A79",
+        image: `${P}/cotton-bath-towels-teal.webp`,
+        width: 640,
+        height: 344,
+      },
+    ],
     sizes: ["Hand", "Bath", "Sheet"],
     description:
       "A dense combed-cotton towel with a plain woven border. Absorbent, quick to dry, and it will not shed.",
@@ -526,8 +786,17 @@ export const products: Product[] = [
     name: "Zero-Twist Towel Set",
     category: "home",
     line: "Bathroom",
+    shot: "still",
     priceCents: 4590,
-    colors: [{ name: "Graphite", hex: "#6E7175", image: `${V}/luxury-tower-set-6-piece.jpg` }],
+    colors: [
+      {
+        name: "Graphite",
+        hex: "#6E7175",
+        image: `${V}/luxury-tower-set-6-piece.jpg`,
+        width: 679,
+        height: 679,
+      },
+    ],
     sizes: ["4 Piece", "6 Piece"],
     description:
       "A full set of bath, hand, and face towels in a heavyweight zero-twist cotton. One colour, no pattern, no logo.",
@@ -547,8 +816,11 @@ export const products: Product[] = [
     name: "Tufted Bath Mat",
     category: "home",
     line: "Bathroom",
+    shot: "model",
     priceCents: 1690,
-    colors: [{ name: "Charcoal", hex: "#4A4A48", image: `${P}/bathroom-rug.jpg` }],
+    colors: [
+      { name: "Charcoal", hex: "#4A4A48", image: `${P}/bathroom-rug.jpg`, width: 679, height: 679 },
+    ],
     sizes: [],
     description:
       "A dense tufted mat with a non-slip backing. Deep enough to sink into, thin enough to clear the door.",
@@ -563,10 +835,23 @@ export const products: Product[] = [
     name: "Blackout Curtain Pair",
     category: "home",
     line: "Living",
+    shot: "model",
     priceCents: 5490,
     colors: [
-      { name: "Black", hex: "#1C1C1C", image: `${P}/blackout-curtains-black.jpg` },
-      { name: "Sand", hex: "#CDBEA5", image: `${P}/blackout-curtain-set-beige.webp` },
+      {
+        name: "Black",
+        hex: "#1C1C1C",
+        image: `${P}/blackout-curtains-black.jpg`,
+        width: 679,
+        height: 679,
+      },
+      {
+        name: "Sand",
+        hex: "#CDBEA5",
+        image: `${P}/blackout-curtain-set-beige.webp`,
+        width: 640,
+        height: 640,
+      },
     ],
     sizes: ['84"', '96"'],
     description:
@@ -587,8 +872,17 @@ export const products: Product[] = [
     name: "Round Vanity Mirror",
     category: "home",
     line: "Living",
+    shot: "still",
     priceCents: 2290,
-    colors: [{ name: "Silver", hex: "#B7BABD", image: `${P}/vanity-mirror-silver.jpg` }],
+    colors: [
+      {
+        name: "Silver",
+        hex: "#B7BABD",
+        image: `${P}/vanity-mirror-silver.jpg`,
+        width: 679,
+        height: 1454,
+      },
+    ],
     sizes: [],
     description:
       "A double-sided mirror on a pivot stand, one side plain and one 10x magnified. Brushed metal frame, weighted base.",
@@ -603,9 +897,16 @@ export const products: Product[] = [
     name: "Soft-Close Step Bin",
     category: "home",
     line: "Living",
+    shot: "still",
     priceCents: 8990,
     colors: [
-      { name: "Steel", hex: "#B0B4B7", image: `${V}/trash-can-with-foot-pedal-50-liter.jpg` },
+      {
+        name: "Steel",
+        hex: "#B0B4B7",
+        image: `${V}/trash-can-with-foot-pedal-50-liter.jpg`,
+        width: 537,
+        height: 879,
+      },
     ],
     sizes: ["30 L", "50 L"],
     description:
@@ -626,8 +927,17 @@ export const products: Product[] = [
     name: "Stoneware Plate Set",
     category: "home",
     line: "Dining",
+    shot: "still",
     priceCents: 3490,
-    colors: [{ name: "White", hex: "#EFEDE7", image: `${P}/6-piece-white-dinner-plate-set.jpg` }],
+    colors: [
+      {
+        name: "White",
+        hex: "#EFEDE7",
+        image: `${P}/6-piece-white-dinner-plate-set.jpg`,
+        width: 679,
+        height: 301,
+      },
+    ],
     sizes: [],
     description:
       "Six plain stoneware dinner plates with a subtle rim. Chip resistant, stackable, dishwasher and microwave safe.",
@@ -647,12 +957,15 @@ export const products: Product[] = [
     name: "Printed Mixing Bowl Set",
     category: "home",
     line: "Dining",
+    shot: "still",
     priceCents: 4290,
     colors: [
       {
         name: "Floral",
         hex: "linear-gradient(135deg,#E8DCC8 0%,#7E8F6A 100%)",
         image: `${P}/floral-mixing-bowl-set.jpg`,
+        width: 640,
+        height: 640,
       },
     ],
     sizes: [],
@@ -674,9 +987,16 @@ export const products: Product[] = [
     name: "Airtight Storage Canister Set",
     category: "home",
     line: "Kitchen",
+    shot: "still",
     priceCents: 3290,
     colors: [
-      { name: "Clear", hex: "#DCE2E4", image: `${P}/round-airtight-food-storage-containers.jpg` },
+      {
+        name: "Clear",
+        hex: "#DCE2E4",
+        image: `${P}/round-airtight-food-storage-containers.jpg`,
+        width: 640,
+        height: 359,
+      },
     ],
     sizes: [],
     description:
@@ -692,12 +1012,15 @@ export const products: Product[] = [
     name: "Glass and Steel Kettle",
     category: "home",
     line: "Kitchen",
+    shot: "still",
     priceCents: 3990,
     colors: [
       {
         name: "Steel",
         hex: "#B9BDC0",
         image: `${P}/electric-glass-and-steel-hot-water-kettle.webp`,
+        width: 561,
+        height: 640,
       },
     ],
     sizes: [],
@@ -719,9 +1042,16 @@ export const products: Product[] = [
     name: "Glass Carafe Coffee Maker",
     category: "home",
     line: "Kitchen",
+    shot: "still",
     priceCents: 2990,
     colors: [
-      { name: "Black", hex: "#1E1E1E", image: `${P}/coffeemaker-with-glass-carafe-black.jpg` },
+      {
+        name: "Black",
+        hex: "#1E1E1E",
+        image: `${P}/coffeemaker-with-glass-carafe-black.jpg`,
+        width: 669,
+        height: 879,
+      },
     ],
     sizes: [],
     description:
@@ -742,8 +1072,17 @@ export const products: Product[] = [
     name: "Two-Slot Toaster",
     category: "home",
     line: "Kitchen",
+    shot: "still",
     priceCents: 2490,
-    colors: [{ name: "Black", hex: "#1D1D1D", image: `${P}/black-2-slot-toaster.jpg` }],
+    colors: [
+      {
+        name: "Black",
+        hex: "#1D1D1D",
+        image: `${P}/black-2-slot-toaster.jpg`,
+        width: 679,
+        height: 782,
+      },
+    ],
     sizes: [],
     description:
       "A matte two-slot toaster with extra-wide slots, six browning levels, and a crumb tray that actually slides out.",
@@ -763,9 +1102,18 @@ export const products: Product[] = [
     name: "Countertop Blender",
     category: "home",
     line: "Kitchen",
+    shot: "still",
     priceCents: 10990,
     compareAtCents: 12990,
-    colors: [{ name: "Steel", hex: "#AFB4B7", image: `${P}/countertop-blender-64-oz.jpg` }],
+    colors: [
+      {
+        name: "Steel",
+        hex: "#AFB4B7",
+        image: `${P}/countertop-blender-64-oz.jpg`,
+        width: 436,
+        height: 436,
+      },
+    ],
     sizes: [],
     description:
       "A 64-ounce blender with a 1200-watt motor and a stainless six-point blade. Crushes ice without a preset.",
@@ -785,9 +1133,16 @@ export const products: Product[] = [
     name: "Non-Stick Cookware Set",
     category: "home",
     line: "Kitchen",
+    shot: "still",
     priceCents: 7990,
     colors: [
-      { name: "Charcoal", hex: "#3A3A38", image: `${P}/non-stick-cooking-set-15-pieces.webp` },
+      {
+        name: "Charcoal",
+        hex: "#3A3A38",
+        image: `${P}/non-stick-cooking-set-15-pieces.webp`,
+        width: 640,
+        height: 325,
+      },
     ],
     sizes: [],
     description:
@@ -808,8 +1163,17 @@ export const products: Product[] = [
     name: "Carbon Steel Bakeware Set",
     category: "home",
     line: "Kitchen",
+    shot: "still",
     priceCents: 3990,
-    colors: [{ name: "Charcoal", hex: "#40403E", image: `${P}/6-piece-non-stick-baking-set.webp` }],
+    colors: [
+      {
+        name: "Charcoal",
+        hex: "#40403E",
+        image: `${P}/6-piece-non-stick-baking-set.webp`,
+        width: 605,
+        height: 436,
+      },
+    ],
     sizes: [],
     description:
       "Six carbon-steel baking pans with a textured non-stick surface that browns evenly and releases clean.",
@@ -844,19 +1208,17 @@ export const categories: Category[] = [
     id: "accessories",
     name: "Accessories",
     tagline: "The last thing you put on",
-    image: `${P}/straw-sunhat.webp`,
+    image: `${P}/women-chunky-beanie-gray.webp`,
     lines: ["Eyewear", "Jewellery", "Hats", "Bags", "Socks"],
   },
   {
     id: "home",
     name: "Home",
     tagline: "Plain materials, honestly made",
-    image: `${P}/cotton-bath-towels-teal.webp`,
+    image: `${V}/duvet-cover-set-blue-twin.jpg`,
     lines: ["Bedroom", "Bathroom", "Living", "Dining", "Kitchen"],
   },
 ];
-
-/* ------------------------------- Lookups ------------------------------- */
 
 const bySlug = new Map(products.map((p) => [p.slug, p]));
 const byId = new Map(products.map((p) => [p.id, p]));

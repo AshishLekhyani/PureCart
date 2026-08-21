@@ -33,6 +33,7 @@ export default function HomePage() {
           cta="Shop the edit"
           image="/products/variations/plain-hooded-fleece-sweatshirt-yellow.jpg"
           imageAlt="Hooded fleece sweatshirt in butter yellow"
+          shot="still"
         />
       </div>
 
@@ -60,6 +61,7 @@ export default function HomePage() {
           cta="Shop home"
           image="/products/cotton-bath-towels-teal.webp"
           imageAlt="Combed cotton bath towels in teal"
+          shot="still"
           reverse
         />
       </div>

@@ -1,15 +1,14 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { products, searchProducts } from "@/lib/catalog";
 import { formatPrice } from "@/lib/money";
 import { cn } from "@/lib/utils";
+import Thumb from "@/components/product/Thumb";
 
 const SUGGESTIONS = ["Hoodie", "Chino", "Sneaker", "Earrings", "Towel"];
 
-// Shown before the shopper types anything.
 const popular = products.filter((product) => product.badges.includes("bestseller")).slice(0, 4);
 
 export default function SearchPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -95,15 +94,12 @@ export default function SearchPanel({ open, onClose }: { open: boolean; onClose:
               {showing.map((product) => (
                 <li key={product.id}>
                   <Link href={`/product/${product.slug}`} onClick={onClose} className="group block">
-                    <div className="bg-sand relative aspect-3/4 overflow-hidden">
-                      <Image
-                        src={product.colors[0].image}
-                        alt={product.name}
-                        fill
-                        sizes="(max-width: 768px) 45vw, 22vw"
-                        className="ease-out-soft object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                    </div>
+                    <Thumb
+                      product={product}
+                      image={product.colors[0].image}
+                      sizes="(max-width: 768px) 45vw, 22vw"
+                      hoverZoom
+                    />
                     <p className="label mt-3">{product.name}</p>
                     <p className="label-sm text-muted mt-1">{formatPrice(product.priceCents)}</p>
                   </Link>

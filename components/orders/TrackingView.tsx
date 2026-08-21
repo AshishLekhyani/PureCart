@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useOrders, selectOrder } from "@/store/orders";
@@ -9,6 +8,7 @@ import { formatPrice } from "@/lib/money";
 import { formatDeliveryDate, formatShortDate, getShipmentProgress } from "@/lib/delivery";
 import { formatOrderRef } from "@/lib/utils";
 import { cn } from "@/lib/utils";
+import Thumb from "@/components/product/Thumb";
 
 const STAGES = ["Preparing", "Shipped", "Delivered"] as const;
 
@@ -16,7 +16,6 @@ export default function TrackingView({ orderId }: { orderId: string }) {
   const { orders, hydrated } = useOrders();
   const order = selectOrder(orders, orderId);
 
-  // Progress depends on the current time, so it is only computed after mount.
   const [now, setNow] = useState<number | null>(null);
   useEffect(() => {
     setNow(Date.now());
@@ -85,16 +84,12 @@ export default function TrackingView({ orderId }: { orderId: string }) {
           return (
             <article key={`${item.productId}-${index}`} className="bg-paper p-6 lg:p-10">
               <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-12">
-                <Link
-                  href={`/product/${product.slug}`}
-                  className="bg-sand relative aspect-3/4 w-32 shrink-0 lg:w-40"
-                >
-                  <Image
-                    src={color.image}
-                    alt={product.name}
-                    fill
+                <Link href={`/product/${product.slug}`}>
+                  <Thumb
+                    product={product}
+                    image={color.image}
                     sizes="160px"
-                    className="object-cover"
+                    className="w-32 shrink-0 lg:w-40"
                   />
                 </Link>
 
@@ -118,7 +113,6 @@ export default function TrackingView({ orderId }: { orderId: string }) {
                     {formatPrice(item.priceCents * item.quantity)}
                   </p>
 
-                  {/* Progress rail */}
                   <div className="mt-9">
                     <div className="bg-line relative h-px w-full">
                       <div

@@ -2,13 +2,14 @@ export type CategoryId = "women" | "men" | "accessories" | "home";
 
 export type Badge = "new" | "bestseller" | "limited" | "sale";
 
+export type ShotStyle = "model" | "still";
+
 export type ColorVariant = {
-  /** Display name, e.g. "Ecru" */
   name: string;
-  /** Swatch fill. Use a two-stop gradient string for prints. */
   hex: string;
-  /** Path under /public */
   image: string;
+  width: number;
+  height: number;
 };
 
 export type Product = {
@@ -16,13 +17,11 @@ export type Product = {
   slug: string;
   name: string;
   category: CategoryId;
-  /** Merchandising line shown under the category, e.g. "Knitwear". */
   line: string;
+  shot: ShotStyle;
   priceCents: number;
-  /** Original price when the item is marked down. */
   compareAtCents?: number;
   colors: ColorVariant[];
-  /** Empty for one-size items and homeware. */
   sizes: string[];
   description: string;
   details: string[];
@@ -35,7 +34,6 @@ export type Category = {
   id: CategoryId;
   name: string;
   tagline: string;
-  /** Hero image path under /public */
   image: string;
   lines: string[];
 };

@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useCart, selectLines, selectSubtotal, selectShipping } from "@/store/cart";
 import { calculateTotals, formatPrice, FREE_SHIPPING_THRESHOLD_CENTS } from "@/lib/money";
 import { deliveryOptions } from "@/lib/delivery";
 import { cn } from "@/lib/utils";
 import QuantityStepper from "./QuantityStepper";
+import Thumb from "@/components/product/Thumb";
 
 export default function CartView() {
   const { items, hydrated, remove, setQuantity, setDeliveryOption } = useCart();
@@ -43,7 +43,6 @@ export default function CartView() {
       <h1 className="display text-[clamp(2.5rem,7vw,5rem)] uppercase">Shopping Bag</h1>
 
       <div className="mt-12 grid gap-16 lg:grid-cols-12 lg:gap-12">
-        {/* Lines */}
         <ul className="divide-line border-line divide-y border-y lg:col-span-8">
           {lines.map((line) => {
             const color =
@@ -55,16 +54,11 @@ export default function CartView() {
                 key={line.key}
                 className="grid grid-cols-[6rem_1fr] gap-5 py-8 sm:grid-cols-[9rem_1fr] sm:gap-8"
               >
-                <Link
-                  href={`/product/${line.product.slug}`}
-                  className="bg-sand relative aspect-3/4 overflow-hidden"
-                >
-                  <Image
-                    src={color.image}
-                    alt={line.product.name}
-                    fill
+                <Link href={`/product/${line.product.slug}`}>
+                  <Thumb
+                    product={line.product}
+                    image={color.image}
                     sizes="(max-width: 640px) 96px, 144px"
-                    className="object-cover"
                   />
                 </Link>
 
@@ -88,7 +82,6 @@ export default function CartView() {
                     </p>
                   </div>
 
-                  {/* Per-line delivery speed */}
                   <fieldset className="mt-5">
                     <legend className="label-sm text-muted">Delivery</legend>
                     <div className="mt-2 flex flex-wrap gap-2">
@@ -131,7 +124,6 @@ export default function CartView() {
           })}
         </ul>
 
-        {/* Summary */}
         <aside className="lg:col-span-4">
           <div className="border-line sticky top-28 border p-7">
             <h2 className="label">Order summary</h2>

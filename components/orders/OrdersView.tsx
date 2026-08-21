@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useOrders } from "@/store/orders";
 import { getProduct } from "@/lib/catalog";
 import { formatPrice } from "@/lib/money";
 import { formatShortDate, getShipmentProgress } from "@/lib/delivery";
 import { formatOrderRef } from "@/lib/utils";
+import Thumb from "@/components/product/Thumb";
 
 export default function OrdersView() {
   const { orders, hydrated } = useOrders();
@@ -37,7 +37,6 @@ export default function OrdersView() {
 
       <div className="bg-line mt-12 space-y-px">
         {orders.map((order) => {
-          // The whole order is as far along as its slowest line.
           const soonest = Math.min(...order.items.map((item) => item.estimatedDeliveryMs));
           const progress = getShipmentProgress(order.placedAtMs, soonest);
 
@@ -67,16 +66,12 @@ export default function OrdersView() {
 
                   return (
                     <li key={`${item.productId}-${index}`} className="flex gap-4">
-                      <Link
-                        href={`/product/${product.slug}`}
-                        className="bg-sand relative aspect-3/4 w-20 shrink-0"
-                      >
-                        <Image
-                          src={color.image}
-                          alt={product.name}
-                          fill
+                      <Link href={`/product/${product.slug}`}>
+                        <Thumb
+                          product={product}
+                          image={color.image}
                           sizes="80px"
-                          className="object-cover"
+                          className="w-20 shrink-0"
                         />
                       </Link>
 

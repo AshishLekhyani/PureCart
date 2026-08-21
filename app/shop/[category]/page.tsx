@@ -6,7 +6,6 @@ import type { CategoryId } from "@/lib/types";
 
 type Params = { params: Promise<{ category: string }> };
 
-/** `new` and `sale` are merchandising views over the whole range, not departments. */
 function resolveView(slug: string) {
   if (slug === "new") {
     return {

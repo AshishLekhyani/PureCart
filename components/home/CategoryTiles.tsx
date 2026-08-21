@@ -15,7 +15,7 @@ export default function CategoryTiles() {
       <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
         {categories.map((category) => (
           <Link key={category.id} href={`/shop/${category.id}`} className="group block">
-            <div className="bg-sand relative aspect-3/4 overflow-hidden">
+            <div className="border-line bg-sand group-hover:border-ink/25 relative aspect-3/4 overflow-hidden border transition-colors duration-500">
               <Image
                 src={category.image}
                 alt=""
@@ -23,7 +23,6 @@ export default function CategoryTiles() {
                 sizes="(max-width: 1024px) 50vw, 25vw"
                 className="ease-out-soft object-cover transition-transform duration-[1200ms] group-hover:scale-105"
               />
-              <div className="bg-ink/0 group-hover:bg-ink/10 absolute inset-0 transition-colors duration-700" />
             </div>
 
             <h3 className="display mt-4 text-2xl uppercase">{category.name}</h3>

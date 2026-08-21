@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import { X } from "lucide-react";
@@ -9,6 +8,7 @@ import { formatPrice, FREE_SHIPPING_THRESHOLD_CENTS } from "@/lib/money";
 import { cn } from "@/lib/utils";
 import { useDialog } from "@/hooks/useDialog";
 import { products } from "@/lib/catalog";
+import Thumb from "@/components/product/Thumb";
 import QuantityStepper from "./QuantityStepper";
 
 const suggestions = products.filter((product) => product.badges.includes("bestseller")).slice(0, 2);
@@ -40,8 +40,6 @@ export default function CartDrawer() {
         role="dialog"
         aria-modal="true"
         aria-label="Shopping bag"
-        // Hidden from the tab order when closed, or its links stay reachable
-        // behind the page while the panel sits off-screen.
         inert={!isOpen}
         className={cn(
           "border-line bg-paper ease-out-soft fixed top-0 right-0 z-80 flex h-full w-full max-w-md flex-col border-l transition-transform duration-500",
@@ -69,7 +67,6 @@ export default function CartDrawer() {
               </Link>
             </div>
 
-            {/* An empty bag is the one place a suggestion is genuinely useful. */}
             <div className="border-line border-t px-6 py-8">
               <p className="label-sm text-muted">Most wanted</p>
               <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-6">
@@ -80,15 +77,12 @@ export default function CartDrawer() {
                       onClick={closeDrawer}
                       className="group block"
                     >
-                      <div className="bg-sand relative aspect-3/4 overflow-hidden">
-                        <Image
-                          src={product.colors[0].image}
-                          alt={product.name}
-                          fill
-                          sizes="180px"
-                          className="ease-out-soft object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                      </div>
+                      <Thumb
+                        product={product}
+                        image={product.colors[0].image}
+                        sizes="180px"
+                        hoverZoom
+                      />
                       <p className="label mt-3">{product.name}</p>
                       <p className="label-sm text-muted mt-1 tabular-nums">
                         {formatPrice(product.priceCents)}
@@ -125,17 +119,12 @@ export default function CartDrawer() {
 
                 return (
                   <li key={line.key} className="flex gap-4 py-5">
-                    <Link
-                      href={`/product/${line.product.slug}`}
-                      onClick={closeDrawer}
-                      className="bg-sand relative aspect-3/4 w-20 shrink-0 overflow-hidden"
-                    >
-                      <Image
-                        src={color.image}
-                        alt={line.product.name}
-                        fill
+                    <Link href={`/product/${line.product.slug}`} onClick={closeDrawer}>
+                      <Thumb
+                        product={line.product}
+                        image={color.image}
                         sizes="80px"
-                        className="object-cover"
+                        className="w-20 shrink-0"
                       />
                     </Link>
 

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -11,6 +10,7 @@ import { calculateTotals, formatPrice } from "@/lib/money";
 import { estimateDelivery, getDeliveryOption } from "@/lib/delivery";
 import { createId } from "@/lib/utils";
 import type { OrderItem } from "@/lib/types";
+import Thumb from "@/components/product/Thumb";
 
 const FIELDS = [
   { name: "email", label: "Email", type: "email", autoComplete: "email", span: 2 },
@@ -150,7 +150,6 @@ export default function CheckoutView() {
           </section>
         </div>
 
-        {/* Summary */}
         <aside className="lg:col-span-5">
           <div className="border-line sticky top-28 border p-7">
             <h2 className="label">Your order</h2>
@@ -163,14 +162,8 @@ export default function CheckoutView() {
 
                 return (
                   <li key={line.key} className="flex gap-4">
-                    <div className="bg-sand relative aspect-3/4 w-16 shrink-0">
-                      <Image
-                        src={color.image}
-                        alt={line.product.name}
-                        fill
-                        sizes="64px"
-                        className="object-cover"
-                      />
+                    <div className="relative w-16 shrink-0">
+                      <Thumb product={line.product} image={color.image} sizes="64px" />
                       <span className="label-sm bg-ink text-paper absolute -top-2 -right-2 flex size-5 items-center justify-center tabular-nums">
                         {line.item.quantity}
                       </span>
