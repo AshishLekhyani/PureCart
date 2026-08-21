@@ -8,11 +8,14 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt = "PureCart product";
 
-const displayFont = readFile(path.join(process.cwd(), "assets/fonts/BodoniModa-Regular.ttf"));
+const displayFont = readFile(path.join(process.cwd(), "assets/fonts/BodoniModa-Regular.ttf")).catch(
+  () => null,
+);
 
 export default async function OpengraphImage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const product = getProductBySlug(slug);
+  const font = await displayFont;
 
   const eyebrow = product ? `${product.category} — ${product.line}` : "Ready to wear";
   const title = product?.name ?? "PureCart";
@@ -29,7 +32,7 @@ export default async function OpengraphImage({ params }: { params: Promise<{ slu
         background: "#ffffff",
         color: "#0e0e0e",
         padding: "72px",
-        fontFamily: "Bodoni Moda",
+        fontFamily: font ? "Bodoni Moda" : "serif",
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -57,14 +60,7 @@ export default async function OpengraphImage({ params }: { params: Promise<{ slu
     </div>,
     {
       ...size,
-      fonts: [
-        {
-          name: "Bodoni Moda",
-          data: await displayFont,
-          weight: 400,
-          style: "normal",
-        },
-      ],
+      fonts: font ? [{ name: "Bodoni Moda", data: font, weight: 400, style: "normal" }] : [],
     },
   );
 }
